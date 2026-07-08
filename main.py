@@ -20,12 +20,14 @@ def db_create(db_fullpath):
 def db_create2(db_fullpath):
     global data_path, filename,filenameFull
     try:
-        open('idonotexist')
+        #open('idonotexist')
+        open(db_fullpath)
         st.write('Database already exists!')
     except IOError as e:
         if e.args == 2: # No such file or directory
-            blank_db = sqlite3.connect('idontexist')
-            st.write('Blank database created')
+            #blank_db = sqlite3.connect('idontexist')
+            blank_db = sqlite3.connect(db_fullpath)
+            st.write(f'{db_fullpath} database created')
         else: # permission denied or something else?
             st.write(e)
 
@@ -44,7 +46,7 @@ def init_buttons():
         os_build_path(data_path)
 
     if st.button('Create DB'):
-        db_create(data_path + filenameFull)
+        db_create2(data_path + filenameFull)
 
     if st.button('Get DB Data test'):
         db_read_test(data_path + filenameFull)
