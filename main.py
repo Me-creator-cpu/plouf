@@ -8,6 +8,7 @@ import sqlite3
 data_path = './data/'
 filename = 'database'
 filenameFull = filename + '.sqlite3'
+db = data_path + filenameFull
 
 def os_build_path(pathtobuild):
     os.makedirs(pathtobuild, exist_ok=True)
@@ -169,8 +170,8 @@ def db_init_data(db_fullpath):
 #==================================================================================================
 
 def init_buttons():
-    global data_path,filename,filenameFull
-    db = data_path + filenameFull
+    global data_path,filename,filenameFull, db
+    #db = data_path + filenameFull
     if st.button('Create path'):
         st.write('Create...')
         os_build_path(db)
