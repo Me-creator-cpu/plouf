@@ -198,7 +198,10 @@ def init_buttons():
 #==================================================================================================
 # Parents =========================================================================================
 def pg_parent_get():
-    st.empty()
+    global db
+    connexion=db_connection(db)
+    db_table_to_df("t_parent",connexion,True)
+    db_connection_close(connexion)
 
 def pg_parent_create():
     st.empty()
@@ -210,7 +213,10 @@ def pg_parent_delete():
     st.empty()
 # Enfant ==========================================================================================
 def pg_enfant_get():
-    st.empty()
+    global db
+    connexion=db_connection(db)
+    db_table_to_df("t_enfant",connexion,True)
+    db_connection_close(connexion)
 
 def pg_enfant_create():
     st.empty()
@@ -222,7 +228,11 @@ def pg_enfant_delete():
     st.empty()
 # Resa ============================================================================================
 def pg_resa_get():
-    st.empty()
+    global db
+    connexion=db_connection(db)
+    db_table_to_df("t_resetvation",connexion,True)
+    db_connection_close(connexion)
+
 
 def pg_resa_create():
     st.empty()
@@ -273,7 +283,7 @@ pages = {
         st.Page(pg_resa_update, title='Planning enfant', icon="📅"),
     ],
     'Admin': [
-        st.Page(pg_parent_create, title='Gérer parents',icon="🌟"),
+        st.Page(pg_parent_get, title='Gérer parents',icon="🌟"),
         st.Page(pg_enfant_create, title='Gérer enfants',icon="🧬"),
         st.Page(pg_resa_get, title='Voir réservations',icon="🧬"),
         st.Page(pg_empty, title='Planning prof',icon="📅"),
