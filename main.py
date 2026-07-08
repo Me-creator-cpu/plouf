@@ -50,7 +50,7 @@ def db_read_test(db_fullpath):
     connexion = sqlite3.connect(db_fullpath)
     #connexion = sqlite3.connect(":memory:") # BDD dans la RAM
     curseur = connexion.cursor() # Récupération d'un curseur
-    curseur.execute("SELECT * FROM TableName")
+    curseur.execute("SELECT * FROM scores")
     for resultat in curseur:
             st.write(resultat)
     connexion.close()
