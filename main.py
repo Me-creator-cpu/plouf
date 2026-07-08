@@ -31,6 +31,21 @@ def db_create2(db_fullpath):
         else: # permission denied or something else?
             st.write(e)
 
+def db_init_data_test(db_fullpath):
+    connexion = sqlite3.connect(db_fullpath)
+    curseur = connexion.cursor()
+    donnees = [("toto", 1000), ("tata", 750), ("titi", 500)]
+    curseur.execute("""CREATE TABLE IF NOT EXISTS scores(
+                    id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+                    pseudo TEXT,
+                    valeur INTEGER
+                    )""")
+    curseur.executemany(
+            "INSERT INTO scores (pseudo, valeur) VALUES (?, ?)",
+            donnees)
+    connexion.commit()
+    connexion.close()
+                    
 def db_read_test(db_fullpath):
     connexion = sqlite3.connect(db_fullpath)
     #connexion = sqlite3.connect(":memory:") # BDD dans la RAM
@@ -42,13 +57,21 @@ def db_read_test(db_fullpath):
 
 def init_buttons():
     global data_path,filename,filenameFull
+    db = data_path + filenameFull
     if st.button('Create path'):
+        st.write('Create...')
         os_build_path(data_path)
 
     if st.button('Create DB'):
-        db_create2(data_path + filenameFull)
+        st.write('Create DB...')
+        db_create2(db)
+
+    if st.button('Create data...'):
+        st.write('Create data...')
+        db_init_data_test(db)
 
     if st.button('Get DB Data test'):
-        db_read_test(data_path + filenameFull)
+        st.write('Read DB...')
+        db_read_test(db)
 
 init_buttons()        
