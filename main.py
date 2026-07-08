@@ -29,8 +29,17 @@ def db_create2(db_fullpath):
         else: # permission denied or something else?
             st.write(e)
 
+def db_read_test(db_fullpath):
+    connexion = sqlite3.connect(db_fullpath)
+    #connexion = sqlite3.connect(":memory:") # BDD dans la RAM
+    curseur = connexion.cursor() # Récupération d'un curseur
+    curseur.execute("SELECT * FROM TableName")
+    for resultat in curseur:
+            st.write(resultat)
+    connexion.close()
+
 def init_buttons():
-    global data_path,filenameFull
+    global data_path,filename,filenameFull
     if st.button('Create path'):
         os_build_path(data_path)
 
@@ -38,6 +47,6 @@ def init_buttons():
         db_create(data_path + filenameFull)
 
     if st.button('Get DB Data test'):
-        st.empty()
+        db_read_test(data_path + filenameFull)
 
 init_buttons()        
