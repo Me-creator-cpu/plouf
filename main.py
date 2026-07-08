@@ -97,8 +97,8 @@ def db_table_to_df(tablename,conn,bShowTab=False):
 
 def db_init_data(db_fullpath):
     bAddParent = False
-    bAddEnfant = True
-    bAddResa = False
+    bAddEnfant = False
+    bAddResa = True
 
     connexion = sqlite3.connect(db_fullpath)
     curseur = connexion.cursor()
@@ -140,11 +140,11 @@ def db_init_data(db_fullpath):
 
     if bAddResa:
                        #(enfant_id, enfant_niveau, resa_date)
-        reservations = [(),
-                        (),
-                        (),
-                        (),
-                        ()]
+        reservations = [(1,6,"11/07/2026"),
+                        (2,12,"18/07/2026"),
+                        (3,12,"17/07/2026"),
+                        (1,6,"11/07/2026"),
+                        (3,12,"13/07/2026")]
         curseur.execute("""CREATE TABLE IF NOT EXISTS t_reservation(
                         resa_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
                         enfant_id INTEGER,
