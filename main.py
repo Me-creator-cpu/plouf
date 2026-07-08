@@ -54,7 +54,7 @@ def db_read_test(db_fullpath):
     for resultat in curseur:
             st.write(resultat)
 
-    df = pd.read_sql_query("SELECT * FROM table_name", connexion)
+    df = pd.read_sql_query("SELECT * FROM scores", connexion)
     df
     connexion.close()
 
