@@ -43,12 +43,15 @@ def db_read_test(db_fullpath):
 def init_buttons():
     global data_path,filename,filenameFull
     if st.button('Create path'):
+        st.write('Create...')
         os_build_path(data_path)
 
     if st.button('Create DB'):
+        st.write('Create DB...')
         db_create2(data_path + filenameFull)
 
     if st.button('Get DB Data test'):
+        st.write('Read DB...')
         db_read_test(data_path + filenameFull)
 
 init_buttons()        
