@@ -270,7 +270,7 @@ pages = {
     'User':[
         st.Page(pg_enfant_get, title='Enfant', icon="🚀"),
         st.Page(pg_resa_create, title='Réservation', icon="🧰"),
-        st.Page(pg_resa_create, title='Planning enfant', icon="📅"),
+        st.Page(pg_resa_update, title='Planning enfant', icon="📅"),
     ],
     'Admin': [
         st.Page(pg_parent_create, title='Gérer parents',icon="🌟"),
