@@ -98,7 +98,8 @@ def db_table_to_df(tablename,conn,bShowTab=False):
 def db_init_data(db_fullpath):
     bAddParent = False
     bAddEnfant = False
-    bAddResa = True
+    bAddResa = False
+    bShowTable = True
 
     connexion = sqlite3.connect(db_fullpath)
     curseur = connexion.cursor()
@@ -157,6 +158,12 @@ def db_init_data(db_fullpath):
         connexion.commit()
         db_table_to_df("t_reservation",connexion,True)
 
+    if bShowTable:
+        db_table_to_df("t_parent",connexion,True)
+        db_table_to_df("t_enfant",connexion,True)
+        db_table_to_df("t_reservation",connexion,True)
+
+    
     connexion.close()
 
 
