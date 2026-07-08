@@ -29,13 +29,16 @@ def db_create2(db_fullpath):
         else: # permission denied or something else?
             st.write(e)
 
-if st.button('Create path'):
-    global data_path
-    os_build_path(data_path)
+def init_buttons():
+    if st.button('Create path'):
+        global data_path
+        os_build_path(data_path)
 
-if st.button('Create DB'):
-    global data_path,filenameFull
-    db_create(data_path + filenameFull)
+    if st.button('Create DB'):
+        global data_path,filenameFull
+        db_create(data_path + filenameFull)
 
-if st.button('Get DB Data test'):
-    st.empty()
+    if st.button('Get DB Data test'):
+        st.empty()
+
+init_buttons()        
