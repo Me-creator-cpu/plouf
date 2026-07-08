@@ -44,7 +44,6 @@ def db_init_data_test(db_fullpath):
     connexion = sqlite3.connect(db_fullpath)
     curseur = connexion.cursor()
     donnees = [("toto", 1000), ("tata", 750), ("titi", 500)]
-    DROP TABLE IF EXISTS scores;
 
     curseur.execute("""CREATE TABLE IF NOT EXISTS scores(
                     id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
