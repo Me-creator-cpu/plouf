@@ -274,7 +274,7 @@ pages = {
     ],
     'Admin': [
         st.Page(pg_parent_create, title='Gérer parents',icon="🌟"),
-        st.Page(pg_enfant_get, title='Gérer enfants',icon="🧬"),
+        st.Page(pg_enfant_create, title='Gérer enfants',icon="🧬"),
         st.Page(pg_resa_get, title='Voir réservations',icon="🧬"),
         st.Page(pg_empty, title='Planning prof',icon="📅"),
     ],
