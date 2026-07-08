@@ -242,6 +242,20 @@ def pg_empty(x=1):
 def pg_init_data():
     init_buttons()
 
+app_title = 'Plouf Plouf'
+
+st.set_page_config(
+    page_title=app_title,
+    page_icon="🧊",
+    layout="wide",
+    initial_sidebar_state="expanded",
+#    menu_items={        # <===================================== #top right menu (triple dots) near GitHub icon
+#        'Get Help': 'https://www.extremelycoolapp.com/help',
+#        'Report a bug': "https://www.extremelycoolapp.com/bug",
+#        'About': "# This is a header. This is an *extremely* cool app!"
+#    }
+)
+
 with st.sidebar:
     top_nav = st.toggle('Menu top', False)
     nav_sections = st.toggle('Avec rubriques', True)
