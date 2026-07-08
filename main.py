@@ -230,7 +230,7 @@ def pg_enfant_delete():
 def pg_resa_get():
     global db
     connexion=db_connection(db)
-    db_table_to_df("t_resetvation",connexion,True)
+    db_table_to_df("t_reservation",connexion,True)
     db_connection_close(connexion)
 
 
