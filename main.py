@@ -270,13 +270,13 @@ pages = {
     'User':[
         st.Page(pg_empty(10), title='Enfant', icon="🚀"),
         st.Page(pg_empty(11), title='Réservation', icon="🧰"),
-        st.Page(pg_empty(12), title='Calendrier', icon="📅"),
+        st.Page(pg_empty(12), title='Planning enfant', icon="📅"),
     ],
     'Admin': [
-        st.Page(pg_empty(20), title='Parent',icon="🌟"),
-        st.Page(pg_empty(21), title='Enfant',icon="🧬"),
-        st.Page(pg_empty(22), title='Réservation',icon="🧬"),
-        st.Page(pg_empty(23), title='Calendrier',icon="📅"),
+        st.Page(pg_empty(20), title='Gérer parents',icon="🌟"),
+        st.Page(pg_empty(21), title='Gérer enfants',icon="🧬"),
+        st.Page(pg_empty(22), title='Voir réservations',icon="🧬"),
+        st.Page(pg_empty(23), title='Planning prof',icon="📅"),
     ],
 }
 
