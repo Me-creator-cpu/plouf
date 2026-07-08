@@ -30,12 +30,11 @@ def db_create2(db_fullpath):
             st.write(e)
 
 def init_buttons():
+    global data_path,filenameFull
     if st.button('Create path'):
-        global data_path
         os_build_path(data_path)
 
     if st.button('Create DB'):
-        global data_path,filenameFull
         db_create(data_path + filenameFull)
 
     if st.button('Get DB Data test'):
