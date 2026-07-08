@@ -153,7 +153,7 @@ def db_init_data(db_fullpath):
                         )""")
         curseur.executemany(
                 "INSERT INTO t_reservation (enfant_id, enfant_niveau, resa_date) VALUES (?, ?, ?)",
-                parents)
+                reservations)
         connexion.commit()
         db_table_to_df("t_reservation",connexion,True)
 
