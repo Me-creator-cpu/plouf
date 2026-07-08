@@ -96,8 +96,8 @@ def db_table_to_df(tablename,conn,bShowTab=False):
     return df
 
 def db_init_data(db_fullpath):
-    bAddParent = True
-    bAddEnfant = False
+    bAddParent = False
+    bAddEnfant = True
     bAddResa = False
 
     connexion = sqlite3.connect(db_fullpath)
@@ -122,9 +122,9 @@ def db_init_data(db_fullpath):
         
     if bAddEnfant:
                 #  (enfant_name, parent_id, enfant_niveau, enfant_annee)
-        enfants = [("eva", 0, 6, 2016), 
-                ("jean", 0, 12, 2010), 
-                ("paulo", 0, 12, 1994)]
+        enfants = [("eva", 1, 6, 2016), 
+                ("jean", 1, 12, 2010), 
+                ("paulo", 3, 12, 1994)]
         curseur.execute("""CREATE TABLE IF NOT EXISTS t_enfant(
                         enfant_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
                         enfant_name TEXT,
