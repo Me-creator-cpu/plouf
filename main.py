@@ -172,24 +172,103 @@ def db_init_data(db_fullpath):
 def init_buttons():
     global data_path,filename,filenameFull, db
     #db = data_path + filenameFull
-    if st.button('Create path'):
-        st.write('Create...')
-        os_build_path(db)
+    if 1 == 2:
+        if st.button('Create path'):
+            st.write('Create...')
+            os_build_path(db)
 
-    if st.button('Create DB'):
-        st.write('Create DB...')
-        db_create2(db)
+        if st.button('Create DB'):
+            st.write('Create DB...')
+            db_create2(db)
 
-    if st.button('Create Data'):
-        st.write('Create data...')
-        db_init_data_test(db)
+        if st.button('Create Data'):
+            st.write('Create data...')
+            db_init_data_test(db)
 
-    if st.button('Get DB Data test'):
-        st.write('Read DB...')
-        db_read_test(db)
+        if st.button('Get DB Data test'):
+            st.write('Read DB...')
+            db_read_test(db)
 
     if st.button("Init data"):
         db_drop_tests(db)
         db_init_data(db)
 
-init_buttons()        
+#==================================================================================================
+# Pages
+#==================================================================================================
+# Parents =========================================================================================
+def pg_parent_get():
+    st.empty()
+
+def pg_parent_create():
+    st.empty()
+
+def pg_parent_update():
+    st.empty()
+
+def pg_parent_delete():
+    st.empty()
+# Enfant ==========================================================================================
+def pg_enfant_get():
+    st.empty()
+
+def pg_enfant_create():
+    st.empty()
+
+def pg_enfant_update():
+    st.empty()
+
+def pg_enfant_delete():
+    st.empty()
+# Resa ============================================================================================
+def pg_resa_get():
+    st.empty()
+
+def pg_resa_create():
+    st.empty()
+
+def pg_resa_update():
+    st.empty()
+
+def pg_resa_delete():
+    st.empty()
+#==================================================================================================
+def pg_home():
+    st.empty()
+
+def pg_empty():
+    st.empty()
+
+def pg_init_data():
+    init_buttons()
+
+with st.sidebar:
+    top_nav = st.toggle('Menu top', False)
+    nav_sections = st.toggle('Avec rubriques', True)
+
+pages = {
+    'Home':[ 
+        st.Page(pg_home, title='Home', icon="🏠"),
+    ],
+    'Init data':[
+        st.Page(pg_init_data, title='Init data', icon="🚀"),
+    ],
+    'User':[
+        st.Page(pg_empty, title='Enfant', icon="🚀"),
+        st.Page(pg_empty, title='Réservation', icon="🧰"),
+        st.Page(pg_empty, title='Calendrier', icon="📅"),
+    ],
+    'Admin': [
+        st.Page(pg_empty, title='Parent',icon="🌟"),
+        st.Page(pg_empty, title='Enfant',icon="🧬"),
+        st.Page(pg_empty, title='Réservation',icon="🧬"),
+        st.Page(pg_empty, title='Calendrier',icon="📅"),
+    ],
+}
+
+pg = st.navigation(
+    pages if nav_sections else [page for section in pages.values() for page in section],
+    position="top" if top_nav else "sidebar"
+)
+pg.run()
+        
