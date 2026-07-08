@@ -63,15 +63,9 @@ def init_buttons():
         os_build_path(data_path)
 
     if st.button('Create DB'):
-        st.write('Create DB...')
-        db_create2(db)
-
-    if st.button('Create data...'):
-        st.write('Create data...')
-        db_init_data_test(db)
+        db_create2(data_path + filenameFull)
 
     if st.button('Get DB Data test'):
-        st.write('Read DB...')
-        db_read_test(db)
+        db_read_test(data_path + filenameFull)
 
 init_buttons()        
