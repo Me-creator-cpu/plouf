@@ -236,7 +236,7 @@ def pg_resa_delete():
 def pg_home():
     st.empty()
 
-def pg_empty():
+def pg_empty(x=1):
     st.empty()
 
 def pg_init_data():
@@ -254,15 +254,15 @@ pages = {
         st.Page(pg_init_data, title='Init data', icon="🚀"),
     ],
     'User':[
-        st.Page(pg_empty, title='Enfant', icon="🚀"),
-        st.Page(pg_empty, title='Réservation', icon="🧰"),
-        st.Page(pg_empty, title='Calendrier', icon="📅"),
+        st.Page(pg_empty(10), title='Enfant', icon="🚀"),
+        st.Page(pg_empty(11), title='Réservation', icon="🧰"),
+        st.Page(pg_empty(12), title='Calendrier', icon="📅"),
     ],
     'Admin': [
-        st.Page(pg_empty, title='Parent',icon="🌟"),
-        st.Page(pg_empty, title='Enfant',icon="🧬"),
-        st.Page(pg_empty, title='Réservation',icon="🧬"),
-        st.Page(pg_empty, title='Calendrier',icon="📅"),
+        st.Page(pg_empty(20), title='Parent',icon="🌟"),
+        st.Page(pg_empty(21), title='Enfant',icon="🧬"),
+        st.Page(pg_empty(22), title='Réservation',icon="🧬"),
+        st.Page(pg_empty(23), title='Calendrier',icon="📅"),
     ],
 }
 
