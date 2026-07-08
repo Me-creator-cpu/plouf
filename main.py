@@ -53,6 +53,9 @@ def db_read_test(db_fullpath):
     curseur.execute("SELECT * FROM scores")
     for resultat in curseur:
             st.write(resultat)
+
+    df = pd.read_sql_query("SELECT * FROM table_name", connexion)
+    df
     connexion.close()
 
 def init_buttons():
