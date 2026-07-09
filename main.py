@@ -205,6 +205,7 @@ def db_parents_get(ID_Parent = None):
     if ID_Parent is not None:
         st.write(f'Filtering for {ID_Parent}')
         df = pd.read_sql_query("SELECT * FROM t_parent WHERE parent_id = " + str(ID_Parent), connexion)
+        df2 = pd.DataFrame(df)
         #filtered_df = df[df['Department'] == 'Marketing']
         filtered_df = df[df['parent_id'] == int(ID_Parent)] #.copy(deep=True)
         #return filtered_df
