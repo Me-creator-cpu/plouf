@@ -205,7 +205,8 @@ def db_parents_get(ID_Parent = None):
     if ID_Parent is not None:
         st.write(f'Filtering for {ID_Parent}')
         df = pd.read_sql_query("SELECT * FROM t_parent WHERE parent_id = " + str(ID_Parent), connexion)
-        df
+        db_connection_close(connexion)
+        return df
         df2 = pd.DataFrame(df)
         df2
         #filtered_df = df[df['Department'] == 'Marketing']
@@ -215,8 +216,9 @@ def db_parents_get(ID_Parent = None):
         #return df
     else:
         df = db_table_to_df("t_parent",connexion,True)
+        db_connection_close(connexion)
         return df
-    db_connection_close(connexion)  
+      
 
 #==================================================================================================
 # Pages
