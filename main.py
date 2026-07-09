@@ -205,7 +205,7 @@ def db_parents_get(ID_Parent = None):
     df = db_table_to_df("t_parent",connexion,True)
     db_connection_close(connexion)    
     if ID_Parent is not None:
-        return df[(df['parent_id'] == ID_Parent)].copy()
+        return df[(df['parent_id'] == ID_Parent)].copy(deep=True)
     else:
         return df
 
