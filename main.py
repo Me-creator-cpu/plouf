@@ -205,7 +205,9 @@ def db_parents_get(ID_Parent = None):
     df = db_table_to_df("t_parent",connexion,True)
     db_connection_close(connexion)    
     if ID_Parent is not None:
-        return df[(df['parent_id'] == ID_Parent)].copy(deep=True)
+        #filtered_df = df[df['Department'] == 'Marketing']
+        filtered_df = df[df['parent_id'] == int(ID_Parent)] #.copy(deep=True)
+        return filtered_df
     else:
         return df
 
