@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import datetime
+import locale
 
 import os
 import sqlite3
@@ -9,6 +10,8 @@ data_path = './data/'
 filename = 'database'
 filenameFull = filename + '.sqlite3'
 db = data_path + filenameFull
+
+locale.setlocale(locale.LC_ALL, "fr_FR")
 
 def os_build_path(pathtobuild):
     os.makedirs(pathtobuild, exist_ok=True)
@@ -194,14 +197,24 @@ def init_buttons():
         db_init_data(db)
 
 #==================================================================================================
+# Fonctions données
+#==================================================================================================
+def db_parents_get(ID_Parent = None):
+    global db
+    connexion=db_connection(db)
+    df = db_table_to_df("t_parent",connexion,True)
+    db_connection_close(connexion)    
+    if ID_Parent is not None:
+        df = df.iloc[ID_Parent]
+    return df
+
+#==================================================================================================
 # Pages
 #==================================================================================================
 # Parents =========================================================================================
 def pg_parent_get():
-    global db
-    connexion=db_connection(db)
-    db_table_to_df("t_parent",connexion,True)
-    db_connection_close(connexion)
+    db_parents_get()
+    db_parents_get(2)
 
 def pg_parent_create():
     st.empty()
