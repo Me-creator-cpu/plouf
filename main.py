@@ -205,6 +205,7 @@ def db_parents_get(ID_Parent = None):
     df = db_table_to_df("t_parent",connexion,True)
     db_connection_close(connexion)    
     if ID_Parent is not None:
+        st.write(f'Filtering on ID_Parent={ID_Parent}')
         df = df.iloc[ID_Parent]
     return df
 
