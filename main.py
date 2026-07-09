@@ -207,9 +207,9 @@ def db_parents_get(ID_Parent = None):
         df = pd.read_sql_query("SELECT * FROM t_parent WHERE parent_id = " + str(ID_Parent), connexion)
         df2 = pd.DataFrame(df)
         #filtered_df = df[df['Department'] == 'Marketing']
-        filtered_df = df[df['parent_id'] == int(ID_Parent)] #.copy(deep=True)
-        #return filtered_df
-        return df
+        filtered_df = df2[df2['parent_id'] == int(ID_Parent)] #.copy(deep=True)
+        return filtered_df
+        #return df
     else:
         df = db_table_to_df("t_parent",connexion,True)
         return df
