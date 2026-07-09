@@ -201,15 +201,17 @@ def init_buttons():
 #==================================================================================================
 def db_parents_get(ID_Parent = None):
     global db
-    connexion=db_connection(db)
-    df = db_table_to_df("t_parent",connexion,True)
-    db_connection_close(connexion)    
+    connexion=db_connection(db)  
     if ID_Parent is not None:
+        df = pd.read_sql_query("SELECT * FROM t_parent WHERE parent_id = " + ID_Parent, connexion)
         #filtered_df = df[df['Department'] == 'Marketing']
         filtered_df = df[df['parent_id'] == int(ID_Parent)] #.copy(deep=True)
-        return filtered_df
-    else:
+        #return filtered_df
         return df
+    else:
+        df = db_table_to_df("t_parent",connexion,True)
+        return df
+    db_connection_close(connexion)  
 
 #==================================================================================================
 # Pages
