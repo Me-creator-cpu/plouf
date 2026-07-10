@@ -259,8 +259,9 @@ def show_diff(
             st.write(u)
             #st.write(source.loc[u][key_field])
         for u in source:
-            st.write(u)
-            #st.write(source.loc[u][key_field])
+            if u == key_field:
+                st.write(u)
+                #st.write(source.loc[u][key_field])
 
 
     st.subheader("Lignes créées")
