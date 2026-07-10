@@ -224,6 +224,16 @@ def highlight_changes(val):
     background = f"background-color:lightgray;" if val else ""
     return f"{color} {background}"
 
+def has_data(df):
+    try:
+        rows, cols = df.shape
+        if rows > 0:
+            return True
+        else:
+            return False
+    except:
+        return False
+    
 def show_diff(
     source_df: pd.DataFrame, modified_df: pd.DataFrame, editor_key: dict, table_name: str, key_field: str
 ) -> None:
@@ -280,8 +290,9 @@ def show_diff(
         width='stretch',
         hide_index=True,
     )
-    rows, cols = target_base.shape
-    if st.button('Test update',disabled=False if rows > 0 else True):
+    #rows, cols = target_base.shape
+    #if st.button('Mettre à jour',disabled=False if rows > 0 else True):
+    if st.button('Mettre à jour',disabled=has_data(target_base)): 
         bStatus=False
         target_base=target_base.fillna('#####')
         rows, cols = target_base.shape
@@ -325,7 +336,7 @@ def show_diff(
     if st.button('Delete data'):
         rows, cols = deleted.shape
         for r in range(rows):
-            st.write(f'{key_field} = {deleted['index'][r]}')
+            st.write(f'{key_field} = {r}')
 
 #    if bRefresh:
 #        st.session_state["parent_edit"] = None
