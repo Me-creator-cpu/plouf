@@ -225,7 +225,9 @@ def show_diff(
     bRefresh = False
     
     st.divider()
+    st.write('Source:')
     source #.iloc[source[key_field]]
+    st.write('Target:')
     target
     target_base = target.copy()
     st.divider()
