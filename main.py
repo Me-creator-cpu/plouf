@@ -339,7 +339,10 @@ def show_diff(
         for r in range(rows):
             id=0
             for c in range(cols):
-                st.write(f'c={c}, colname=TODO')
+                st.write(f'c={c}')
+            for c in inserted.columns:
+                st.write(f'colname={c}')
+
             #INSERT INTO {table_name} (parent_name, parent_tel, parent_mail) VALUES (?, ?, ?)
             sql = f"INSERT INTO {table_name} WHERE {key_field} = {id}"
             if bDebug:
