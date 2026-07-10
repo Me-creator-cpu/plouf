@@ -292,7 +292,7 @@ def show_diff(
     )
     #rows, cols = target_base.shape
     #if st.button('Mettre à jour',disabled=False if rows > 0 else True):
-    if st.button('Mettre à jour',disabled=has_data(target_base)): 
+    if st.button('Mettre à jour',disabled=not has_data(target_base)): 
         bStatus=False
         target_base=target_base.fillna('#####')
         rows, cols = target_base.shape
