@@ -238,6 +238,8 @@ def pg_parent_adm():
     df_edited  = df_updated.get("edited_rows")
     df_added   = df_updated.get("added_rows")
     df_deleted = df_updated.get("deleted_rows")
+    st.write(df_edited,df_added,df_deleted)
+
 
 #==================================================================================================
 # Pages
