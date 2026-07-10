@@ -256,16 +256,13 @@ def show_diff(
     )
     if st.button('Test update'):
         target_base
+        rows, cols = target_base.shape()
+        st.write(rows, cols)
         for u in target_base:
             st.write(u)
             for c in target_base.columns:
                 st.write(f'column={c}')
             #st.write(source.loc[u][key_field])
-        for u in source:
-            if u == key_field:
-                st.write(u)
-                st.write(source.loc[u]['parent_id'])
-                #st.write(source.loc[u][key_field])
 
 
     st.subheader("Lignes créées")
