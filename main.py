@@ -258,22 +258,33 @@ def show_diff(
         target_base
         rows, cols = target_base.shape
         st.write(rows, cols)
+        sql=''
+        id=0
+        name=''
+        tel=''
+        mail=''
         for r in range(rows):
             st.write(f'{key_field} = {target_base['index'][r]}')
+            id=target_base['index'][r]
             #for c in range(cols):
-            #    st.write(f'updated field={c}')
-            #    st.write(f'updated value=TODO')
             for c in target_base:
                 if c != 'index':
                     st.write(f'updated field={c}')
                     st.write(f'New {c} = {target_base[c][r]}')
-
+            #sql = f'UPDATE t_parent SET parent_name){name} parent_email={email}, parent_tel={tel}  WHERE parent_id={id}'
+        if id != 0:
+            st.write(sql)
     st.subheader("Lignes créées")
     inserted = pd.DataFrame(editor_key.get("added_rows"))
     st.dataframe(inserted, width='stretch')
     st.subheader("Lignes supprimées")
     deleted = pd.DataFrame(editor_key.get("deleted_rows"))
     st.dataframe(deleted, width='stretch')
+    if st.button('Delete data'):
+        rows, cols = deleted.shape
+        for r in range(rows):
+            st.write(f'{key_field} = {deleted['index'][r]}')
+
 
 def get_cell_value(d,src,ret,valsrc):
     #data_type.get("Color")[data_type["Type"].index("Fire")]
@@ -303,9 +314,9 @@ def db_parents_get(ID_Parent = None):
         db_connection_close(connexion)
         return df
 
-def db_parents_update(id,tel,email):
+def db_parents_update(id,name,tel,email):
     global db
-    sql = f'UPDATE t_parent SET column1={email}, column2={tel}  WHERE parent_id={id}'
+    sql = f'UPDATE t_parent SET parent_name){name} parent_email={email}, parent_tel={tel}  WHERE parent_id={id}'
     try:
         with db_connection(db) as conn:
             cur = conn.cursor()  
@@ -346,7 +357,7 @@ def pg_parent_adm():
         st.write('loop upd')
         for u in df_edited:
             st.write(df.loc[u]['parent_id'])
-            #db_parents_update(df.loc[u]['parent_id'],df.loc[u]['parent_id'],df.loc[u]['parent_email'])
+            #db_parents_update(df.loc[u]['parent_id'],df.loc[u]['parent_name'],df.loc[u]['parent_id'],df.loc[u]['parent_email'])
     st.divider()
     df_added   = df_updated.get("added_rows")
     st.write(df_added)
