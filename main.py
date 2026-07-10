@@ -234,10 +234,16 @@ def show_diff(
             new_col = cl.replace("_AFTER", "_BEFORE")
             change_markers[cl] = change_markers[cl] != change_markers[new_col]
             change_markers[new_col] = change_markers[cl]
+    if 1 == 2:    
+        st.dataframe(
+            changes.style.apply(
+                lambda _: change_markers.applymap(highlight_changes), axis=None
+            ),
+            use_container_width=True,
+            hide_index=True,
+        )
     st.dataframe(
-        changes.style.apply(
-            lambda _: change_markers.applymap(highlight_changes), axis=None
-        ),
+        changes,
         use_container_width=True,
         hide_index=True,
     )
