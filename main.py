@@ -264,7 +264,7 @@ def show_diff(
             #    st.write(f'updated field={c}')
             #    st.write(f'updated value=TODO')
             for c in target_base:
-                if c == 'index':
+                if c != 'index':
                     st.write(f'updated field={c}')
 
     st.subheader("Lignes créées")
