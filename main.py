@@ -251,10 +251,11 @@ def pg_parent_adm():
     df_edited  = df_updated.get("edited_rows")
     st.write(df_edited)
     if st.button('Mettre à jour'):
+        target = pd.DataFrame(df_edited).transpose().reset_index()
+        modified_columns = [i for i in pd.DataFrame(df_edited).notna().columns if i != "index"]
+        modified_columns
         for u in df_edited:
             st.write(df.loc[u]['parent_id'])
-            modified_columns = [i for i in pd.DataFrame(df_edited).notna().columns if i != "index"]
-            modified_columns
             #db_parents_update(df.loc[u]['parent_id'],df.loc[u]['parent_id'],df.loc[u]['parent_email'])
     st.divider()
     df_added   = df_updated.get("added_rows")
