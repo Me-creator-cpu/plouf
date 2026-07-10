@@ -260,13 +260,9 @@ def show_diff(
         st.write(rows, cols)
         sql=''
         id=0
-        name=''
-        tel=''
-        mail=''
         for r in range(rows):
             st.write(f'{key_field} = {target_base['index'][r]}')
             id=target_base['index'][r]
-            #for c in range(cols):
             for c in target_base:
                 if c != 'index':
                     if target_base[c][r] != '#####':
@@ -274,6 +270,7 @@ def show_diff(
                         st.write(f'New {c} = {target_base[c][r]}')
                         sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {target_base['index'][r]}"
                         st.write(sql)
+
     st.subheader("Lignes créées")
     inserted = pd.DataFrame(editor_key.get("added_rows"))
     st.dataframe(inserted, width='stretch')
