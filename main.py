@@ -93,6 +93,17 @@ def db_connection_close(conn, bCommit = False):
 def db_commit(conn):
     conn.commit()
 
+def db_exec_sql(sql):
+    global db
+    try:
+        with db_connection(db) as conn:
+            cur = conn.cursor()  
+            cur.execute(sql)
+            conn.commit()
+    except sqlite3.OperationalError as e:
+        st.write(e)
+    db_connection_close(conn)
+
 def db_table_to_df(tablename,conn,bShowTab=False):
     df = pd.read_sql_query("SELECT * FROM " + tablename, conn)
     if bShowTab:
@@ -257,19 +268,20 @@ def show_diff(
     if st.button('Test update'):
         target_base=target_base.fillna('#####')
         rows, cols = target_base.shape
-        st.write(rows, cols)
+        #st.write(rows, cols)
         sql=''
         id=0
         for r in range(rows):
-            st.write(f'{key_field} = {target_base['index'][r]}')
+            #st.write(f'{key_field} = {target_base['index'][r]}')
             id=target_base['index'][r]
             for c in target_base:
                 if c != 'index':
                     if target_base[c][r] != '#####':
-                        st.write(f'updated field={c}')
-                        st.write(f'New {c} = {target_base[c][r]}')
+                        #st.write(f'updated field={c}')
+                        #st.write(f'New {c} = {target_base[c][r]}')
                         sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {target_base['index'][r]}"
-                        st.write(sql)
+                        db_exec_sql(sql)
+                        #st.write(sql)
 
     st.subheader("Lignes créées")
     inserted = pd.DataFrame(editor_key.get("added_rows"))
@@ -282,6 +294,7 @@ def show_diff(
         for r in range(rows):
             st.write(f'{key_field} = {deleted['index'][r]}')
 
+    st.session_state["parent_edit"] = None
 
 def get_cell_value(d,src,ret,valsrc):
     #data_type.get("Color")[data_type["Type"].index("Fire")]
