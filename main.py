@@ -249,7 +249,7 @@ def show_diff(
             width='stretch',
             hide_index=True,
         )
-    st.dataframe(
+    st.dataframe( 
         changes,
         width='stretch',
         hide_index=True,
