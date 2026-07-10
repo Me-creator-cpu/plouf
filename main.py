@@ -219,6 +219,18 @@ def db_parents_get(ID_Parent = None):
         db_connection_close(connexion)
         return df
       
+def pg_parent_adm():
+    global db
+    connexion=db_connection(db)  
+    df = db_table_to_df("t_parent",connexion,True)
+    db_connection_close(connexion)
+    editor_df = st.data_editor(
+        df, 
+        key="parent_edit", 
+        num_rows="dynamic", 
+        use_container_width=True
+    )
+    st.write(st.session_state["parent_edit"]) 
 
 #==================================================================================================
 # Pages
@@ -308,7 +320,7 @@ pages = {
         st.Page(pg_resa_update, title='Planning enfant', icon="📅"),
     ],
     'Admin': [
-        st.Page(pg_parent_get, title='Gérer parents',icon="🌟"),
+        st.Page(pg_parent_adm, title='Gérer parents',icon="🌟"),
         st.Page(pg_enfant_create, title='Gérer enfants',icon="🧬"),
         st.Page(pg_resa_get, title='Voir réservations',icon="🧬"),
         st.Page(pg_empty, title='Planning prof',icon="📅"),
