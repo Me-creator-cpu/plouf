@@ -330,6 +330,35 @@ def show_diff(
     st.subheader("Lignes créées")
     inserted = pd.DataFrame(editor_key.get("added_rows"))
     st.dataframe(inserted, width='stretch')
+    
+    if st.button('Add data', disabled=not has_data(inserted)):
+        rows, cols = inserted.shape
+        sql=''
+        bStatus=False
+        conn = db_connection(db)
+        for r in range(rows):
+            id=int(inserted[0][r])
+            #INSERT INTO {table_name} (parent_name, parent_tel, parent_mail) VALUES (?, ?, ?)
+            sql = f"INSERT INTO {table_name} WHERE {key_field} = {id}"
+            if bDebug:
+                st.write(sql)
+            cur = conn.cursor()
+            #cur.execute(sql)
+        
+        try:
+            conn.commit()
+            bStatus=True
+        except sqlite3.OperationalError as e:
+            st.write(e)
+            bStatus=False
+        db_connection_close(conn)
+
+        if bStatus:
+            st.success('Création effectuée')
+        else:
+            st.warning('Erreur dans la création')
+
+    
     st.subheader("Lignes supprimées")
     deleted = pd.DataFrame(editor_key.get("deleted_rows"))
     st.dataframe(deleted, width='stretch')
@@ -345,7 +374,7 @@ def show_diff(
             if bDebug:
                 st.write(sql)
             cur = conn.cursor()
-            #cur.execute(sql)
+            cur.execute(sql)
         
         try:
             conn.commit()
@@ -358,7 +387,7 @@ def show_diff(
         if bStatus:
             st.success('Suppression effectuée')
         else:
-            st.warning('Erreur dans la Suppression')
+            st.warning('Erreur dans la suppression')
 
 
 #    if bRefresh:
