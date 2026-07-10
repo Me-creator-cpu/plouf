@@ -214,6 +214,7 @@ def show_diff(
     st.divider()
     source #.iloc[source[key_field]]
     target
+    target_base = target.copy()
     st.divider()
     
     target = target[modified_columns].reset_index()
@@ -254,9 +255,11 @@ def show_diff(
         hide_index=True,
     )
     if st.button('Test update'):
-        for u in target:
+        for u in target_base:
             st.write(u)
             #st.write(source.loc[u][key_field])
+        for u in source:
+            st.write(u)
 
 
     st.subheader("Lignes créées")
