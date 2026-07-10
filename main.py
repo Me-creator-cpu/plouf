@@ -337,7 +337,7 @@ def show_diff(
         inserted = pd.DataFrame(editor_key.get("added_rows"))
         st.dataframe(inserted, width='stretch')
         
-        if st.button('Add data', disabled=not has_data(inserted)):
+        if st.button('Ajouter', disabled=not has_data(inserted)):
             rows, cols = inserted.shape
             sql=''
 
@@ -384,7 +384,7 @@ def show_diff(
         st.subheader("Lignes supprimées")
         deleted = pd.DataFrame(editor_key.get("deleted_rows"))
         st.dataframe(deleted, width='stretch')
-        if st.button('Delete data', disabled=not has_data(deleted)):
+        if st.button('Supprimer', disabled=not has_data(deleted)):
             rows, cols = deleted.shape
             sql=''
             id=0
