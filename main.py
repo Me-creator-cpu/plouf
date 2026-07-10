@@ -280,6 +280,8 @@ def show_diff(
             src_col=key_field
             src_row=target_base['index'][r]
             st.write(f'src_row={src_row}')
+            test=source.loc[source["index"] == src_row, key_field]
+            st.write(f'test={test}')
             st.write(f'source {key_field} = {source[{key_field}][src_row]}')
             id=1 #int(source[src_col][src_row])
             for c in target_base:
