@@ -273,17 +273,17 @@ def show_diff(
         sql=''
         id=0
         for r in range(rows):
-            st.write(f'{key_field} = {target_base['index'][r]}')
+            #st.write(f'{key_field} = {target_base['index'][r]}')
             src_col=key_field
             src_row=target_base['index'][r]
-            st.write(f'Source {key_field} = {source[src_col][src_row]}')
-            id=target_base['index'][r]
+            #st.write(f'Source {key_field} = {source[src_col][src_row]}')
+            id={source[src_col][src_row]}
             for c in target_base:
                 if c != 'index':
                     if target_base[c][r] != '#####':
                         #st.write(f'updated field={c}')
                         #st.write(f'New {c} = {target_base[c][r]}')
-                        sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {target_base['index'][r]}"
+                        sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {id}"
                         st.write(sql)
                         #db_exec_sql(sql)
                         #bRefresh=True
