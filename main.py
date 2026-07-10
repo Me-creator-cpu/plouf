@@ -252,7 +252,7 @@ def pg_parent_adm():
     st.write(df_edited)
     if st.button('Mettre à jour'):
         for u in df_edited:
-            st.write(df[u])
+            st.write(df.loc[u])
         #db_parents_update(id,tel,email)
     st.divider()
     df_added   = df_updated.get("added_rows")
