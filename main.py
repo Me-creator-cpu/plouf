@@ -282,7 +282,7 @@ def show_diff(
                         #st.write(f'New {c} = {target_base[c][r]}')
                         sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {target_base['index'][r]}"
                         st.write(sql)
-                        db_exec_sql(sql)
+                        #db_exec_sql(sql)
 
     st.subheader("Lignes créées")
     inserted = pd.DataFrame(editor_key.get("added_rows"))
