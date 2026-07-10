@@ -288,17 +288,6 @@ def show_diff(
         sql=''
         id=0
 
-        try:
-            with db_connection(db) as conn:
-                cur = conn.cursor()  
-                cur.execute(sql)
-                conn.commit()
-                bExecSql=True
-        except sqlite3.OperationalError as e:
-            st.write(e)
-            bExecSql=False
-        db_connection_close(conn)
-
         conn = db_connection(db)
         for r in range(rows):
             id=int(source.iloc[r][key_field])
