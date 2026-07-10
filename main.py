@@ -232,10 +232,12 @@ def pg_parent_adm():
         disabled=["parent_id"],
         hide_index=True,
     )
-    st.write(st.session_state["parent_edit"]) 
-    df_edited  = st.session_state["parent_edit"].edited_rows
-    df_added   = st.session_state["parent_edit"].added_rows
-    df_deleted = st.session_state["parent_edit"].deleted_rows
+    df_updated=st.session_state["parent_edit"]
+    st.write(df_updated) 
+
+    df_edited  = df_updated.get("edited_rows")
+    df_added   = df_updated.get("added_rows")
+    df_deleted = df_updated.get("deleted_rows")
 
 #==================================================================================================
 # Pages
