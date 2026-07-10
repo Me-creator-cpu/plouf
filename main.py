@@ -260,8 +260,9 @@ def show_diff(
         st.write(rows, cols)
         for r in range(rows):
             st.write(f'{key_field} = {target_base['index'][r]}')
-            st.write(f'updated field=TODO')
-            st.write(f'updated value=TODO')
+            for c in range(cols):
+                st.write(f'updated field={c}')
+                st.write(f'updated value=TODO')
 
     st.subheader("Lignes créées")
     inserted = pd.DataFrame(editor_key.get("added_rows"))
