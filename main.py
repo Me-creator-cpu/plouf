@@ -341,7 +341,7 @@ def show_diff(
             id=0
             fld_lst=''
             fld_val=''
-            bKeyValid=False
+            bKeyValid=True
             for c in inserted.columns:
                 col=c
                 val=inserted[c][r]
