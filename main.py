@@ -12,7 +12,7 @@ filenameFull = filename + '.sqlite3'
 db = data_path + filenameFull
 
 bDebug=False
-bDebug=True
+#bDebug=True
 
 locale.setlocale(locale.LC_ALL, "fr_FR")
 
@@ -86,7 +86,9 @@ def db_drop_tests(db_fullpath):
 
 #==================================================================================================
 def db_connection(db_fullpath):
-    st.write(db_fullpath)
+    global bDebug
+    if bDebug:
+        st.write(db_fullpath)
     return sqlite3.connect(db_fullpath)
 
 def db_connection_close(conn, bCommit = False):
