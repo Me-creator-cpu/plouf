@@ -121,9 +121,9 @@ def db_table_to_df(tablename,conn,bShowTab=False):
     return df
 
 def db_init_data(db_fullpath):
-    bAddParent = False
-    bAddEnfant = False
-    bAddResa = False
+    bAddParent = True
+    bAddEnfant = True
+    bAddResa = True
     bShowTable = not(bAddParent) and not(bAddEnfant) and not(bAddResa)
 
     connexion = sqlite3.connect(db_fullpath)
