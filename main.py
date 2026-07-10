@@ -334,22 +334,33 @@ def show_diff(
     if st.button('Add data', disabled=not has_data(inserted)):
         rows, cols = inserted.shape
         sql=''
+
         bStatus=False
         conn = db_connection(db)
         for r in range(rows):
             id=0
-            for c in range(cols):
-                st.write(f'c={c}')
+            fld_lst=''
+            fld_val=''
+            bKeyValid=False
             for c in inserted.columns:
-                st.write(f'colname={c},value={inserted[c][r]}')
-
-            #INSERT INTO {table_name} (parent_name, parent_tel, parent_mail) VALUES (?, ?, ?)
-            sql = f"INSERT INTO {table_name} WHERE {key_field} = {id}"
-            if bDebug:
-                st.write(sql)
-            cur = conn.cursor()
-            #cur.execute(sql)
-        
+                col=c
+                val=inserted[c][r]
+                if col == key_field:
+                    bKeyValid=True
+                st.write(f'colname={col},value={val}')
+                if fld_lst=='':
+                    fld_lst += col
+                    fld_val += val
+                else:
+                    fld_lst += ","+col
+                    fld_val += ",'"+val+"'"
+            if bKeyValid:
+                #INSERT INTO {table_name} (parent_name, parent_tel, parent_mail) VALUES (?, ?, ?)
+                sql = f"INSERT INTO {table_name} ({fld_lst}) VALUES ({fld_val})"
+                if bDebug:
+                    st.write(sql)
+                cur = conn.cursor()
+                #cur.execute(sql)
         try:
             conn.commit()
             bStatus=True
