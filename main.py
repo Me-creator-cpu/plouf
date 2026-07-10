@@ -313,8 +313,8 @@ def show_diff(
         for r in range(rows):
             st.write(f'{key_field} = {deleted['index'][r]}')
 
-    if bRefresh:
-        st.session_state["parent_edit"] = None
+#    if bRefresh:
+#        st.session_state["parent_edit"] = None
 
 def get_cell_value(d,src,ret,valsrc):
     #data_type.get("Color")[data_type["Type"].index("Fire")]
