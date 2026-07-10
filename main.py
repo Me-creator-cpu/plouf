@@ -276,11 +276,11 @@ def show_diff(
         sql=''
         id=0
         for r in range(rows):
-            st.write(f'r = {r}')
-            st.write(f'{key_field} = {target_base['index'][r]}')
+            #st.write(f'r = {r}')
+            #st.write(f'{key_field} = {target_base['index'][r]}')
             src_col=key_field
-            src_row=source.iloc[r][key_field]
-            st.write(f'src_row={src_row}')
+            #src_row=source.iloc[r][key_field]
+            #st.write(f'src_row={src_row}')
             #st.write(f'source {key_field} = {source[{key_field}][src_row]}')
             id=int(source.iloc[r][key_field])
             for c in target_base:
@@ -290,8 +290,8 @@ def show_diff(
                         #st.write(f'New {c} = {target_base[c][r]}')
                         sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {id}"
                         st.write(sql)
-                        #db_exec_sql(sql)
-                        #bRefresh=True
+                        db_exec_sql(sql)
+                        bRefresh=True
 
     st.subheader("Lignes créées")
     inserted = pd.DataFrame(editor_key.get("added_rows"))
