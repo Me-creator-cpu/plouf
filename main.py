@@ -232,7 +232,7 @@ def show_diff(
             new_col = cl.replace("_AFTER", "_BEFORE")
             changes[cl] = changes[cl].fillna(changes[new_col])
 
-    st.subheader("Donées modifiées")
+    st.subheader("Données modifiées")
     st.caption("Colonnes modifiées uniquement")
 
     change_markers = changes.copy()
