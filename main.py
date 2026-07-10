@@ -281,7 +281,7 @@ def show_diff(
         hide_index=True,
     )
     rows, cols = target_base.shape
-    if st.button('Test update',disabled=False if rows == 0 else True):
+    if st.button('Test update',disabled=False if rows > 0 else True):
         bStatus=False
         target_base=target_base.fillna('#####')
         rows, cols = target_base.shape
