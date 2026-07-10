@@ -218,7 +218,19 @@ def db_parents_get(ID_Parent = None):
         df = db_table_to_df("t_parent",connexion,True)
         db_connection_close(connexion)
         return df
-      
+
+def db_parents_update(id,tel,email):
+    global db
+    sql = f'UPDATE t_parent SET column1={email}, column2={tel}  WHERE parent_id={id}'
+    try:
+        with db_connection(db) as conn:
+            cur = conn.cursor()  
+            cur.execute(sql)
+            conn.commit()
+    except sqlite3.OperationalError as e:
+        st.write(e)
+    db_connection_close(conn)
+
 def pg_parent_adm():
     global db
     connexion=db_connection(db)  
@@ -235,10 +247,19 @@ def pg_parent_adm():
     df_updated=st.session_state["parent_edit"]
     st.write(df_updated) 
 
+    st.divider()
     df_edited  = df_updated.get("edited_rows")
+    st.write(df_edited)
+    if st.button('Mettre à jour'):
+        for u in df_edited:
+            st.write(u)
+        #db_parents_update(id,tel,email)
+    st.divider()
     df_added   = df_updated.get("added_rows")
+    st.write(df_added)
+    st.divider()
     df_deleted = df_updated.get("deleted_rows")
-    st.write(df_edited,df_added,df_deleted)
+    st.write(df_deleted)
 
 
 #==================================================================================================
