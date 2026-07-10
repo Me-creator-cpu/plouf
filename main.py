@@ -266,6 +266,7 @@ def show_diff(
             for c in target_base:
                 if c != 'index':
                     st.write(f'updated field={c}')
+                    st.write(f'New {c} = {target_base[c][r]}')
 
     st.subheader("Lignes créées")
     inserted = pd.DataFrame(editor_key.get("added_rows"))
