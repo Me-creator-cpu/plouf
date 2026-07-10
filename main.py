@@ -360,7 +360,7 @@ def show_diff(
                 if bDebug:
                     st.write(sql)
                 cur = conn.cursor()
-                #cur.execute(sql)
+                cur.execute(sql)
         try:
             conn.commit()
             bStatus=True
