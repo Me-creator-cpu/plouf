@@ -338,7 +338,7 @@ def show_diff(
         conn = db_connection(db)
         for r in range(rows):
             id=0
-            for c in range(cols)
+            for c in range(cols):
                 st.write(f'c={c}, colname=TODO')
             #INSERT INTO {table_name} (parent_name, parent_tel, parent_mail) VALUES (?, ?, ?)
             sql = f"INSERT INTO {table_name} WHERE {key_field} = {id}"
