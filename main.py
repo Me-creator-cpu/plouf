@@ -223,6 +223,7 @@ def show_diff(
     modified_columns = [i for i in target.notna().columns if i != "index"]
     source = source_df.iloc[target['index']].reset_index()
     bRefresh = False
+    
     st.divider()
     source #.iloc[source[key_field]]
     target
@@ -277,7 +278,7 @@ def show_diff(
             src_col=key_field
             src_row=target_base['index'][r]
             st.write(f'src_row={src_row}')
-            st.write(f'target {key_field} = {target[{key_field}][src_row]}')
+            st.write(f'source {key_field} = {source[{key_field}][src_row]}')
             id=1 #int(source[src_col][src_row])
             for c in target_base:
                 if c != 'index':
