@@ -255,6 +255,7 @@ def show_diff(
         hide_index=True,
     )
     if st.button('Test update'):
+        target_base
         for u in target_base:
             st.write(u)
             #st.write(source.loc[u][key_field])
