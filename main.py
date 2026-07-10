@@ -261,7 +261,7 @@ def show_diff(
         for u in source:
             if u == key_field:
                 st.write(u)
-                st.write(source.iloc[source[key_field]])
+                st.write(source.loc[u]['parent_id'])
                 #st.write(source.loc[u][key_field])
 
 
