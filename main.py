@@ -12,6 +12,7 @@ filenameFull = filename + '.sqlite3'
 db = data_path + filenameFull
 
 bDebug=False
+bDebug=True
 
 locale.setlocale(locale.LC_ALL, "fr_FR")
 
