@@ -272,7 +272,7 @@ def show_diff(
                     if target_base[c][r] != '#####':
                         st.write(f'updated field={c}')
                         st.write(f'New {c} = {target_base[c][r]}')
-                        sql = f'UPDATE t_parent SET {c}={target_base[c][r]} WHERE {key_field} = {target_base['index'][r]}'
+                        sql = f"UPDATE t_parent SET {c}='{target_base[c][r]}' WHERE {key_field} = {target_base['index'][r]}"
                     if id != 0:
                         st.write(sql)
     st.subheader("Lignes créées")
