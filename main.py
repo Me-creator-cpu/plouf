@@ -11,6 +11,8 @@ filename = 'database'
 filenameFull = filename + '.sqlite3'
 db = data_path + filenameFull
 
+bDebug=False
+
 locale.setlocale(locale.LC_ALL, "fr_FR")
 
 def os_build_path(pathtobuild):
@@ -94,8 +96,9 @@ def db_commit(conn):
     conn.commit()
 
 def db_exec_sql(sql):
-    global db
-    st.write(f'Exec SQL: {sql}')
+    global db, bDebug
+    if bDebug:
+        st.write(f'Exec SQL: {sql}')
     try:
         with db_connection(db) as conn:
             cur = conn.cursor()  
@@ -219,18 +222,21 @@ def highlight_changes(val):
 def show_diff(
     source_df: pd.DataFrame, modified_df: pd.DataFrame, editor_key: dict, table_name: str, key_field: str
 ) -> None:
+    global bDebug
     target = pd.DataFrame(editor_key.get("edited_rows")).transpose().reset_index()
+    target_base = target.copy()
     modified_columns = [i for i in target.notna().columns if i != "index"]
     source = source_df.iloc[target['index']].reset_index()
     bRefresh = False
     
-    st.divider()
-    st.write('Source:')
-    source #.iloc[source[key_field]]
-    st.write('Target:')
-    target
-    target_base = target.copy()
-    st.divider()
+    if bDebug:
+        with st.expander('Inputs',expanded=False):
+            st.divider()
+            st.write('Source:')
+            source #.iloc[source[key_field]]
+            st.write('Target:')
+            target
+            st.divider()
     
     target = target[modified_columns].reset_index()
 
@@ -276,20 +282,12 @@ def show_diff(
         sql=''
         id=0
         for r in range(rows):
-            #st.write(f'r = {r}')
-            #st.write(f'{key_field} = {target_base['index'][r]}')
-            src_col=key_field
-            #src_row=source.iloc[r][key_field]
-            #st.write(f'src_row={src_row}')
-            #st.write(f'source {key_field} = {source[{key_field}][src_row]}')
             id=int(source.iloc[r][key_field])
             for c in target_base:
                 if c != 'index':
                     if target_base[c][r] != '#####':
-                        #st.write(f'updated field={c}')
-                        #st.write(f'New {c} = {target_base[c][r]}')
                         sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {id}"
-                        st.write(sql)
+                        #st.write(sql)
                         db_exec_sql(sql)
                         bRefresh=True
 
