@@ -335,8 +335,31 @@ def show_diff(
     st.dataframe(deleted, width='stretch')
     if st.button('Delete data', disabled=not has_data(deleted)):
         rows, cols = deleted.shape
+        sql=''
+        id=0
+        bStatus=False
+        conn = db_connection(db)
         for r in range(rows):
-            st.write(f'{key_field} = {deleted[0][r]}')
+            id=int(deleted[0][r])
+            sql = f"DELETE FROM {table_name} WHERE {key_field} = {id}"
+            if bDebug:
+                st.write(sql)
+            cur = conn.cursor()
+            #cur.execute(sql)
+        
+        try:
+            conn.commit()
+            bStatus=True
+        except sqlite3.OperationalError as e:
+            st.write(e)
+            bStatus=False
+        db_connection_close(conn)
+
+        if bStatus:
+            st.success('Suppression effectuée')
+        else:
+            st.warning('Erreur dans la Suppression')
+
 
 #    if bRefresh:
 #        st.session_state["parent_edit"] = None
