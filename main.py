@@ -267,143 +267,147 @@ def show_diff(
         if cl in after_columns:
             new_col = cl.replace("_AFTER", "_BEFORE")
             changes[cl] = changes[cl].fillna(changes[new_col])
+    
+    bStatus=False
+    col1, col2, col3 = st.columns(3)
 
-    st.subheader("Données modifiées")
-    st.caption("Colonnes modifiées uniquement")
+    with col1:
+        st.subheader("Données modifiées")
+        st.caption("Colonnes modifiées uniquement")
 
-    change_markers = changes.copy()
-    for cl in change_markers:
-        if cl in after_columns:
-            new_col = cl.replace("_AFTER", "_BEFORE")
-            change_markers[cl] = change_markers[cl] != change_markers[new_col]
-            change_markers[new_col] = change_markers[cl]
-    if 1 == 2:    
-        st.dataframe(
-            changes.style.apply(
-                lambda _: change_markers.applymap(highlight_changes), axis=None
-            ),
+        change_markers = changes.copy()
+        for cl in change_markers:
+            if cl in after_columns:
+                new_col = cl.replace("_AFTER", "_BEFORE")
+                change_markers[cl] = change_markers[cl] != change_markers[new_col]
+                change_markers[new_col] = change_markers[cl]
+        if 1 == 2:    
+            st.dataframe(
+                changes.style.apply(
+                    lambda _: change_markers.applymap(highlight_changes), axis=None
+                ),
+                width='stretch',
+                hide_index=True,
+            )
+        st.dataframe( 
+            changes,
             width='stretch',
             hide_index=True,
         )
-    st.dataframe( 
-        changes,
-        width='stretch',
-        hide_index=True,
-    )
-    #rows, cols = target_base.shape
-    #if st.button('Mettre à jour',disabled=False if rows > 0 else True):
-    if st.button('Mettre à jour',disabled=not has_data(target_base)): 
-        bStatus=False
-        target_base=target_base.fillna('#####')
-        rows, cols = target_base.shape
-        #st.write(rows, cols)
-        sql=''
-        id=0
 
-        conn = db_connection(db)
-        for r in range(rows):
-            id=int(source.iloc[r][key_field])
-            for c in target_base:
-                if c != 'index':
-                    if target_base[c][r] != '#####':
-                        sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {id}"
-                        cur = conn.cursor()
-                        cur.execute(sql)
-                        if bDebug:
-                            st.write(sql)
-                        #bStatus = bStatus or db_exec_sql(sql)
-                        bRefresh=True
-        
-        try:
-            conn.commit()
-            bStatus=True
-        except sqlite3.OperationalError as e:
-            st.write(e)
+        if st.button('Mettre à jour',disabled=not has_data(target_base)): 
             bStatus=False
-        db_connection_close(conn)
-
-        if bStatus:
-            st.success('Mise à jour effectuée')
-        else:
-            st.warning('Erreur dans la mise à jour')
-
-    st.subheader("Lignes créées")
-    inserted = pd.DataFrame(editor_key.get("added_rows"))
-    st.dataframe(inserted, width='stretch')
-    
-    if st.button('Add data', disabled=not has_data(inserted)):
-        rows, cols = inserted.shape
-        sql=''
-
-        bStatus=False
-        conn = db_connection(db)
-        for r in range(rows):
+            target_base=target_base.fillna('#####')
+            rows, cols = target_base.shape
+            #st.write(rows, cols)
+            sql=''
             id=0
-            fld_lst=''
-            fld_val=''
-            bKeyValid=True
-            for c in inserted.columns:
-                col=c
-                val=inserted[c][r]
-                if col == key_field:
-                    bKeyValid=True
-                st.write(f'colname={col},value={val}')
-                if fld_lst=='':
-                    fld_lst += col
-                    fld_val += "'"+val+"'"
-                else:
-                    fld_lst += ", "+col
-                    fld_val += ", '"+val+"'"
-            if bKeyValid:
-                #INSERT INTO {table_name} (parent_name, parent_tel, parent_mail) VALUES (?, ?, ?)
-                sql = f"INSERT INTO {table_name} ({fld_lst}) VALUES ({fld_val})"
+
+            conn = db_connection(db)
+            for r in range(rows):
+                id=int(source.iloc[r][key_field])
+                for c in target_base:
+                    if c != 'index':
+                        if target_base[c][r] != '#####':
+                            sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {id}"
+                            cur = conn.cursor()
+                            cur.execute(sql)
+                            if bDebug:
+                                st.write(sql)
+                            #bStatus = bStatus or db_exec_sql(sql)
+                            bRefresh=True
+            
+            try:
+                conn.commit()
+                bStatus=True
+            except sqlite3.OperationalError as e:
+                st.write(e)
+                bStatus=False
+            db_connection_close(conn)
+
+            if bStatus:
+                st.success('Mise à jour effectuée')
+            else:
+                st.warning('Erreur dans la mise à jour')
+
+    with col2:
+        st.subheader("Lignes créées")
+        inserted = pd.DataFrame(editor_key.get("added_rows"))
+        st.dataframe(inserted, width='stretch')
+        
+        if st.button('Add data', disabled=not has_data(inserted)):
+            rows, cols = inserted.shape
+            sql=''
+
+            bStatus=False
+            conn = db_connection(db)
+            for r in range(rows):
+                id=0
+                fld_lst=''
+                fld_val=''
+                bKeyValid=True
+                for c in inserted.columns:
+                    col=c
+                    val=inserted[c][r]
+                    if col == key_field:
+                        bKeyValid=True
+                    st.write(f'colname={col},value={val}')
+                    if fld_lst=='':
+                        fld_lst += col
+                        fld_val += "'"+val+"'"
+                    else:
+                        fld_lst += ", "+col
+                        fld_val += ", '"+val+"'"
+                if bKeyValid:
+                    #INSERT INTO {table_name} (parent_name, parent_tel, parent_mail) VALUES (?, ?, ?)
+                    sql = f"INSERT INTO {table_name} ({fld_lst}) VALUES ({fld_val})"
+                    if bDebug:
+                        st.write(sql)
+                    cur = conn.cursor()
+                    cur.execute(sql)
+            try:
+                conn.commit()
+                bStatus=True
+            except sqlite3.OperationalError as e:
+                st.write(e)
+                bStatus=False
+            db_connection_close(conn)
+
+            if bStatus:
+                st.success('Création effectuée')
+            else:
+                st.warning('Erreur dans la création')
+
+    with col3:
+        st.subheader("Lignes supprimées")
+        deleted = pd.DataFrame(editor_key.get("deleted_rows"))
+        st.dataframe(deleted, width='stretch')
+        if st.button('Delete data', disabled=not has_data(deleted)):
+            rows, cols = deleted.shape
+            sql=''
+            id=0
+            bStatus=False
+            conn = db_connection(db)
+            for r in range(rows):
+                id=int(deleted[0][r])
+                sql = f"DELETE FROM {table_name} WHERE {key_field} = {id}"
                 if bDebug:
                     st.write(sql)
                 cur = conn.cursor()
                 cur.execute(sql)
-        try:
-            conn.commit()
-            bStatus=True
-        except sqlite3.OperationalError as e:
-            st.write(e)
-            bStatus=False
-        db_connection_close(conn)
+            
+            try:
+                conn.commit()
+                bStatus=True
+            except sqlite3.OperationalError as e:
+                st.write(e)
+                bStatus=False
+            db_connection_close(conn)
 
-        if bStatus:
-            st.success('Création effectuée')
-        else:
-            st.warning('Erreur dans la création')
-
-    
-    st.subheader("Lignes supprimées")
-    deleted = pd.DataFrame(editor_key.get("deleted_rows"))
-    st.dataframe(deleted, width='stretch')
-    if st.button('Delete data', disabled=not has_data(deleted)):
-        rows, cols = deleted.shape
-        sql=''
-        id=0
-        bStatus=False
-        conn = db_connection(db)
-        for r in range(rows):
-            id=int(deleted[0][r])
-            sql = f"DELETE FROM {table_name} WHERE {key_field} = {id}"
-            if bDebug:
-                st.write(sql)
-            cur = conn.cursor()
-            cur.execute(sql)
-        
-        try:
-            conn.commit()
-            bStatus=True
-        except sqlite3.OperationalError as e:
-            st.write(e)
-            bStatus=False
-        db_connection_close(conn)
-
-        if bStatus:
-            st.success('Suppression effectuée')
-        else:
-            st.warning('Erreur dans la suppression')
+            if bStatus:
+                st.success('Suppression effectuée')
+            else:
+                st.warning('Erreur dans la suppression')
 
 
 #    if bRefresh:
