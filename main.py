@@ -95,6 +95,7 @@ def db_commit(conn):
 
 def db_exec_sql(sql):
     global db
+    st.write(f'Exec SQL: {sql}')
     try:
         with db_connection(db) as conn:
             cur = conn.cursor()  
@@ -280,8 +281,8 @@ def show_diff(
                         #st.write(f'updated field={c}')
                         #st.write(f'New {c} = {target_base[c][r]}')
                         sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {target_base['index'][r]}"
+                        st.write(sql)
                         db_exec_sql(sql)
-                        #st.write(sql)
 
     st.subheader("Lignes créées")
     inserted = pd.DataFrame(editor_key.get("added_rows"))
