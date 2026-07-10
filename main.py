@@ -253,6 +253,11 @@ def show_diff(
         width='stretch',
         hide_index=True,
     )
+    if st.button('Test update'):
+        for u in target:
+            st.write(u)
+            #st.write(source.loc[u][key_field])
+
 
     st.subheader("Lignes créées")
     inserted = pd.DataFrame(editor_key.get("added_rows"))
