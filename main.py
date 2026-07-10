@@ -239,21 +239,21 @@ def show_diff(
             changes.style.apply(
                 lambda _: change_markers.applymap(highlight_changes), axis=None
             ),
-            use_container_width=True,
+            width='stretch',
             hide_index=True,
         )
     st.dataframe(
         changes,
-        use_container_width=True,
+        width='stretch',
         hide_index=True,
     )
 
     st.subheader("Lignes crées")
     inserted = pd.DataFrame(editor_key.get("added_rows"))
-    st.dataframe(inserted, use_container_width=True)
+    st.dataframe(inserted, width='stretch')
     st.subheader("Lignes supprimées")
     deleted = pd.DataFrame(editor_key.get("deleted_rows"))
-    st.dataframe(deleted, use_container_width=True)
+    st.dataframe(deleted, width='stretch')
 
 
 
