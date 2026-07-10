@@ -299,7 +299,7 @@ def show_diff(
             st.success('Mise à jour effectuée')
         else:
             st.warning('Erreur dans la mise à jour')
-            
+
     st.subheader("Lignes créées")
     inserted = pd.DataFrame(editor_key.get("added_rows"))
     st.dataframe(inserted, width='stretch')
@@ -364,7 +364,7 @@ def pg_parent_adm():
         df, 
         key="parent_edit", 
         num_rows="dynamic", 
-        use_container_width=True,
+        width='stretch',
         disabled=["parent_id"],
         hide_index=True,
     )
