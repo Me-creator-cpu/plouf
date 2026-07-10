@@ -86,6 +86,7 @@ def db_drop_tests(db_fullpath):
 
 #==================================================================================================
 def db_connection(db_fullpath):
+    st.write(db_fullpath)
     return sqlite3.connect(db_fullpath)
 
 def db_connection_close(conn, bCommit = False):
