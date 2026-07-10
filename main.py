@@ -233,6 +233,9 @@ def pg_parent_adm():
         hide_index=True,
     )
     st.write(st.session_state["parent_edit"]) 
+    df_edited  = st.session_state["parent_edit"].edited_rows
+    df_added   = st.session_state["parent_edit"].added_rows
+    df_deleted = st.session_state["parent_edit"].deleted_rows
 
 #==================================================================================================
 # Pages
