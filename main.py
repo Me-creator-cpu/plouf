@@ -499,7 +499,7 @@ def pg_enfant_adm():
     connexion=db_connection(db)  
     df = db_table_to_df("t_enfant",connexion,False)
     db_connection_close(connexion)    
-    st.subheader("Liste des enfantss ⬇️")
+    st.subheader("Liste des enfants ⬇️")
     editor_df = st.data_editor(
         df, 
         key="enfant_edit", 
@@ -607,7 +607,7 @@ pages = {
     ],
     'Admin': [
         st.Page(pg_parent_adm, title='Gérer parents',icon="🌟"),
-        st.Page(pg_enfant_create, title='Gérer enfants',icon="🧬"),
+        st.Page(pg_enfant_adm, title='Gérer enfants',icon="🧬"),
         st.Page(pg_resa_get, title='Voir réservations',icon="🧬"),
         st.Page(pg_empty, title='Planning prof',icon="📅"),
     ],
