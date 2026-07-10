@@ -273,7 +273,7 @@ def show_diff(
         sql=''
         id=0
         for r in range(rows):
-            #st.write(f'{key_field} = {target_base['index'][r]}')
+            st.write(f'{key_field} = {target_base['index'][r]}')
             id=target_base['index'][r]
             for c in target_base:
                 if c != 'index':
