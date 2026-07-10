@@ -255,7 +255,7 @@ def show_diff(
         hide_index=True,
     )
     if st.button('Test update'):
-        target_base
+        target_base=target_base.fillna('#####')
         rows, cols = target_base.shape
         st.write(rows, cols)
         sql=''
@@ -269,9 +269,7 @@ def show_diff(
             #for c in range(cols):
             for c in target_base:
                 if c != 'index':
-                    if target_base[c][r] == 'nan':
-                        st.empty()
-                    else:
+                    if target_base[c][r] != '#####':
                         st.write(f'updated field={c}')
                         st.write(f'New {c} = {target_base[c][r]}')
             #sql = f'UPDATE t_parent SET parent_name){name} parent_email={email}, parent_tel={tel}  WHERE parent_id={id}'
