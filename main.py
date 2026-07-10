@@ -205,15 +205,14 @@ def highlight_changes(val):
     return f"{color} {background}"
 
 def show_diff(
-    source_df: pd.DataFrame, modified_df: pd.DataFrame, editor_key: dict
+    source_df: pd.DataFrame, modified_df: pd.DataFrame, editor_key: dict, key_field: str
 ) -> None:
     target = pd.DataFrame(editor_key.get("edited_rows")).transpose().reset_index()
     modified_columns = [i for i in target.notna().columns if i != "index"]
-    #source = source_df.iloc[target.index].reset_index()
     source = source_df.iloc[target['index']].reset_index()
 
     st.divider()
-    source
+    source.loc[key_field]
     target
     st.divider()
     
@@ -312,7 +311,7 @@ def pg_parent_adm():
         hide_index=True,
     )
 
-    show_diff(source_df=df, modified_df=editor_df, editor_key=st.session_state["parent_edit"])
+    show_diff(source_df=df, modified_df=editor_df, editor_key=st.session_state["parent_edit"],key_field='parent_id')
     return True
     df_updated=st.session_state["parent_edit"]
     st.write(df_updated) 
