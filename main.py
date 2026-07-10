@@ -281,7 +281,7 @@ def show_diff(
             src_col=key_field
             src_row=source.iloc[r][key_field]
             st.write(f'src_row={src_row}')
-            st.write(f'source {key_field} = {source[{key_field}][src_row]}')
+            #st.write(f'source {key_field} = {source[{key_field}][src_row]}')
             id=int(source.iloc[r][key_field])
             for c in target_base:
                 if c != 'index':
