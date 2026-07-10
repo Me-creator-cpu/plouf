@@ -212,7 +212,7 @@ def show_diff(
     source = source_df.iloc[target['index']].reset_index()
 
     st.divider()
-    source.iloc[source[key_field]]
+    source #.iloc[source[key_field]]
     target
     st.divider()
     
