@@ -222,7 +222,7 @@ def show_diff(
     target = pd.DataFrame(editor_key.get("edited_rows")).transpose().reset_index()
     modified_columns = [i for i in target.notna().columns if i != "index"]
     source = source_df.iloc[target['index']].reset_index()
-
+    bRefresh = False
     st.divider()
     source #.iloc[source[key_field]]
     target
@@ -283,6 +283,7 @@ def show_diff(
                         sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {target_base['index'][r]}"
                         st.write(sql)
                         #db_exec_sql(sql)
+                        #bRefresh=True
 
     st.subheader("Lignes créées")
     inserted = pd.DataFrame(editor_key.get("added_rows"))
@@ -295,7 +296,8 @@ def show_diff(
         for r in range(rows):
             st.write(f'{key_field} = {deleted['index'][r]}')
 
-    st.session_state["parent_edit"] = None
+    if bRefresh:
+        st.session_state["parent_edit"] = None
 
 def get_cell_value(d,src,ret,valsrc):
     #data_type.get("Color")[data_type["Type"].index("Fire")]
