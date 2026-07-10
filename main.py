@@ -293,7 +293,8 @@ def show_diff(
                 if c != 'index':
                     if target_base[c][r] != '#####':
                         sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {id}"
-                        #st.write(sql)
+                        if bDebug:
+                            st.write(sql)
                         bStatus = bStatus or db_exec_sql(sql)
                         bRefresh=True
         if bStatus:
