@@ -276,7 +276,6 @@ def show_diff(
 
     with col1:
         st.subheader("Données modifiées")
-        st.caption("Colonnes modifiées uniquement")
 
         change_markers = changes.copy()
         for cl in change_markers:
@@ -297,7 +296,7 @@ def show_diff(
             width='stretch',
             hide_index=True,
         )
-
+        st.caption("Colonnes modifiées uniquement")
         if st.button('Mettre à jour',disabled=not has_data(target_base)): 
             bStatus=False
             target_base=target_base.fillna('#####')
