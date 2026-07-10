@@ -205,7 +205,7 @@ def highlight_changes(val):
     return f"{color} {background}"
 
 def show_diff(
-    source_df: pd.DataFrame, modified_df: pd.DataFrame, editor_key: dict, key_field: str
+    source_df: pd.DataFrame, modified_df: pd.DataFrame, editor_key: dict, table_name: str, key_field: str
 ) -> None:
     target = pd.DataFrame(editor_key.get("edited_rows")).transpose().reset_index()
     modified_columns = [i for i in target.notna().columns if i != "index"]
@@ -272,7 +272,7 @@ def show_diff(
                     if target_base[c][r] != '#####':
                         st.write(f'updated field={c}')
                         st.write(f'New {c} = {target_base[c][r]}')
-                        sql = f"UPDATE t_parent SET {c}='{target_base[c][r]}' WHERE {key_field} = {target_base['index'][r]}"
+                        sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {target_base['index'][r]}"
                         st.write(sql)
     st.subheader("Lignes créées")
     inserted = pd.DataFrame(editor_key.get("added_rows"))
@@ -341,7 +341,7 @@ def pg_parent_adm():
         hide_index=True,
     )
 
-    show_diff(source_df=df, modified_df=editor_df, editor_key=st.session_state["parent_edit"],key_field='parent_id')
+    show_diff(source_df=df, modified_df=editor_df, editor_key=st.session_state["parent_edit"],table_name='t_parent', key_field='parent_id')
     return True
     df_updated=st.session_state["parent_edit"]
     st.write(df_updated) 
