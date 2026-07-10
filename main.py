@@ -259,14 +259,9 @@ def show_diff(
         rows, cols = target_base.shape
         st.write(rows, cols)
         for r in range(rows):
-            st.write(target_base['index'][r])
-        
-        for u in target_base:
-            st.write(u)
-            for c in target_base.columns:
-                st.write(f'column={c}')
-            #st.write(source.loc[u][key_field])
-
+            st.write(f'{key_field} = {target_base['index'][r]}')
+            st.write(f'updated field=TODO')
+            st.write(f'updated value=TODO')
 
     st.subheader("Lignes créées")
     inserted = pd.DataFrame(editor_key.get("added_rows"))
