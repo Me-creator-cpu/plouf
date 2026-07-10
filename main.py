@@ -259,7 +259,7 @@ def show_diff(
         rows, cols = target_base.shape
         st.write(rows, cols)
         for r in range(rows):
-            st.write(target_base[key_field][r])
+            st.write(target_base['index'][r])
         
         for u in target_base:
             st.write(u)
