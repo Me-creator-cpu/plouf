@@ -97,6 +97,7 @@ def db_commit(conn):
 
 def db_exec_sql(sql):
     global db, bDebug
+    bExecSql=False
     if bDebug:
         st.write(f'Exec SQL: {sql}')
     try:
@@ -104,9 +105,12 @@ def db_exec_sql(sql):
             cur = conn.cursor()  
             cur.execute(sql)
             conn.commit()
+            bExecSql=True
     except sqlite3.OperationalError as e:
         st.write(e)
+        bExecSql=False
     db_connection_close(conn)
+    return bExecSql
 
 def db_table_to_df(tablename,conn,bShowTab=False):
     df = pd.read_sql_query("SELECT * FROM " + tablename, conn)
@@ -276,6 +280,7 @@ def show_diff(
         hide_index=True,
     )
     if st.button('Test update'):
+        bStatus=False
         target_base=target_base.fillna('#####')
         rows, cols = target_base.shape
         #st.write(rows, cols)
@@ -288,9 +293,13 @@ def show_diff(
                     if target_base[c][r] != '#####':
                         sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {id}"
                         #st.write(sql)
-                        db_exec_sql(sql)
+                        bStatus = bStatus or db_exec_sql(sql)
                         bRefresh=True
-
+        if bStatus:
+            st.success('Mise à jour effectuée')
+        else:
+            st.warning('Erreur dans la mise à jour')
+            
     st.subheader("Lignes créées")
     inserted = pd.DataFrame(editor_key.get("added_rows"))
     st.dataframe(inserted, width='stretch')
