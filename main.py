@@ -262,7 +262,7 @@ def show_diff(
             if u == key_field:
                 st.write(u)
                 #source = source_df.iloc[target['index']]
-                st.write(source.loc[u])
+                st.write(source.loc[u][key_field])
 
 
     st.subheader("Lignes créées")
