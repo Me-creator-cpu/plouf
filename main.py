@@ -268,9 +268,12 @@ def show_diff(
             id=target_base['index'][r]
             #for c in range(cols):
             for c in target_base:
-                if c != 'index' and target_base[c][r] != 'nan':
-                    st.write(f'updated field={c}')
-                    st.write(f'New {c} = {target_base[c][r]}')
+                if c != 'index':
+                    if target_base[c][r] == 'nan':
+                        st.empty()
+                    else:
+                        st.write(f'updated field={c}')
+                        st.write(f'New {c} = {target_base[c][r]}')
             #sql = f'UPDATE t_parent SET parent_name){name} parent_email={email}, parent_tel={tel}  WHERE parent_id={id}'
         if id != 0:
             st.write(sql)
