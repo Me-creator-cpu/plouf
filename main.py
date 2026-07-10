@@ -256,7 +256,7 @@ def show_diff(
     )
     if st.button('Test update'):
         target_base
-        rows, cols = target_base.shape()
+        rows, cols = target_base.shape
         st.write(rows, cols)
         for u in target_base:
             st.write(u)
