@@ -227,7 +227,7 @@ def highlight_changes(val):
 def show_diff(
     source_df: pd.DataFrame, modified_df: pd.DataFrame, editor_key: dict, table_name: str, key_field: str
 ) -> None:
-    global bDebug
+    global db,bDebug
     target = pd.DataFrame(editor_key.get("edited_rows")).transpose().reset_index()
     target_base = target.copy()
     modified_columns = [i for i in target.notna().columns if i != "index"]
@@ -287,16 +287,40 @@ def show_diff(
         #st.write(rows, cols)
         sql=''
         id=0
+
+        try:
+            with db_connection(db) as conn:
+                cur = conn.cursor()  
+                cur.execute(sql)
+                conn.commit()
+                bExecSql=True
+        except sqlite3.OperationalError as e:
+            st.write(e)
+            bExecSql=False
+        db_connection_close(conn)
+
+        conn = db_connection(db)
         for r in range(rows):
             id=int(source.iloc[r][key_field])
             for c in target_base:
                 if c != 'index':
                     if target_base[c][r] != '#####':
                         sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {id}"
+                        cur = conn.cursor()
+                        cur.execute(sql)
                         if bDebug:
                             st.write(sql)
-                        bStatus = bStatus or db_exec_sql(sql)
+                        #bStatus = bStatus or db_exec_sql(sql)
                         bRefresh=True
+        
+        try:
+            conn.commit()
+            bStatus=True
+        except sqlite3.OperationalError as e:
+            st.write(e)
+            bStatus=False
+        db_connection_close(conn)
+
         if bStatus:
             st.success('Mise à jour effectuée')
         else:
