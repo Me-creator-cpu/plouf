@@ -228,7 +228,9 @@ def pg_parent_adm():
         df, 
         key="parent_edit", 
         num_rows="dynamic", 
-        use_container_width=True
+        use_container_width=True,
+        disabled=["parent_id"],
+        hide_index=True,
     )
     st.write(st.session_state["parent_edit"]) 
 
