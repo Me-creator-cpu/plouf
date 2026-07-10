@@ -255,7 +255,7 @@ def show_diff(
         hide_index=True,
     )
 
-    st.subheader("Lignes crées")
+    st.subheader("Lignes créées")
     inserted = pd.DataFrame(editor_key.get("added_rows"))
     st.dataframe(inserted, width='stretch')
     st.subheader("Lignes supprimées")
