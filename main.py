@@ -542,6 +542,12 @@ def pg_resa_delete():
     st.empty()
 #==================================================================================================
 def pg_home():
+    global db
+    connexion=db_connection(db)
+    db_table_to_df("t_parent",connexion,True)
+    db_table_to_df("t_enfant",connexion,True)
+    db_table_to_df("t_reservation",connexion,True)
+    db_connection_close(connexion)
     st.empty()
 
 def pg_empty(x=1):
