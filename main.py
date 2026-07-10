@@ -258,6 +258,8 @@ def show_diff(
         target_base
         for u in target_base:
             st.write(u)
+            for c in target_base.columns:
+                st.write(f'column={c}')
             #st.write(source.loc[u][key_field])
         for u in source:
             if u == key_field:
