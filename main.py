@@ -210,7 +210,7 @@ def show_diff(
     target = pd.DataFrame(editor_key.get("edited_rows")).transpose().reset_index()
     modified_columns = [i for i in target.notna().columns if i != "index"]
     #source = source_df.iloc[target.index].reset_index()
-    source = source_df.iloc[target].reset_index()
+    source = source_df.loc[target].reset_index()
     target = target[modified_columns].reset_index()
 
     changes = pd.merge(
