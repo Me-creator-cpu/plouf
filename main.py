@@ -350,10 +350,10 @@ def show_diff(
                 st.write(f'colname={col},value={val}')
                 if fld_lst=='':
                     fld_lst += col
-                    fld_val += val
+                    fld_val += "'"+val+"'"
                 else:
-                    fld_lst += ","+col
-                    fld_val += ",'"+val+"'"
+                    fld_lst += ", "+col
+                    fld_val += ", '"+val+"'"
             if bKeyValid:
                 #INSERT INTO {table_name} (parent_name, parent_tel, parent_mail) VALUES (?, ?, ?)
                 sql = f"INSERT INTO {table_name} ({fld_lst}) VALUES ({fld_val})"
