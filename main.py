@@ -494,6 +494,23 @@ def pg_parent_adm():
     df_deleted = df_updated.get("deleted_rows")
     st.write(df_deleted)
 
+def pg_enfant_adm():
+    global db
+    connexion=db_connection(db)  
+    df = db_table_to_df("t_enfant",connexion,False)
+    db_connection_close(connexion)    
+    st.subheader("Liste des enfantss ⬇️")
+    editor_df = st.data_editor(
+        df, 
+        key="enfant_edit", 
+        num_rows="dynamic", 
+        width='stretch',
+        disabled=["enfant_id"],
+        hide_index=True,
+    )
+
+    show_diff(source_df=df, modified_df=editor_df, editor_key=st.session_state["enfant_edit"],table_name='t_enfant', key_field='enfant_id')
+    return True    
 
 #==================================================================================================
 # Pages
