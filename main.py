@@ -222,7 +222,7 @@ def db_parents_get(ID_Parent = None):
 def pg_parent_adm():
     global db
     connexion=db_connection(db)  
-    df = db_table_to_df("t_parent",connexion,True)
+    df = db_table_to_df("t_parent",connexion,False)
     db_connection_close(connexion)
     editor_df = st.data_editor(
         df, 
