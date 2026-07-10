@@ -253,7 +253,9 @@ def pg_parent_adm():
     if st.button('Mettre à jour'):
         target = pd.DataFrame(df_edited).transpose().reset_index()
         modified_columns = [i for i in pd.DataFrame(df_edited).notna().columns if i != "index"]
+        st.write('modified_columns')
         modified_columns
+        st.write('loop upd')
         for u in df_edited:
             st.write(df.loc[u]['parent_id'])
             #db_parents_update(df.loc[u]['parent_id'],df.loc[u]['parent_id'],df.loc[u]['parent_email'])
