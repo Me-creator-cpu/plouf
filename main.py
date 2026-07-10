@@ -258,6 +258,9 @@ def show_diff(
         target_base
         rows, cols = target_base.shape
         st.write(rows, cols)
+        for r in rows:
+            st.write(target_base[key_field][r])
+        
         for u in target_base:
             st.write(u)
             for c in target_base.columns:
@@ -272,7 +275,12 @@ def show_diff(
     deleted = pd.DataFrame(editor_key.get("deleted_rows"))
     st.dataframe(deleted, width='stretch')
 
-
+def get_cell_value(d,src,ret,valsrc):
+    #data_type.get("Color")[data_type["Type"].index("Fire")]
+    try:
+        return d.get(ret)[d[src].index(valsrc)]
+    except:
+        return None
 
 
 def db_parents_get(ID_Parent = None):
