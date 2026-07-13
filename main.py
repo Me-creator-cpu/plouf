@@ -642,9 +642,13 @@ def pg_enfant_delete():
 def pg_resa_get():
     global db
     connexion=db_connection(db)
-    db_table_to_df("t_reservation",connexion,True)
+    df_parent=db_table_to_df("t_parent",connexion,True)
+    df_enfant=db_table_to_df("t_enfant",connexion,True)
+    df_resa=db_table_to_df("t_reservation",connexion,True)
     db_connection_close(connexion)
-
+    df = pd.merge(df_resa, df_enfant, how="left", on=["enfant_id", "enfant_id"])
+    df = pd.merge(df, df_parent, how="left", on=["parent_id", "parent_id"])
+    df
 
 def pg_resa_create():
     st.empty()
