@@ -6,6 +6,8 @@ import locale
 import os
 import sqlite3
 
+#https://gist.github.com/GeorgePearse/bb951fde95fded5b2a1323fc1c29b8e7
+
 data_path = './data/'
 filename = 'database'
 filenameFull = filename + '.sqlite3'
@@ -576,6 +578,15 @@ def pg_home():
         mime="text/csv",
         icon=":material/download:",
     )
+
+    with open(db, "rb") as fp:
+        btn = st.download_button(
+            label="Download db file",
+            data=fp,
+            file_name=filenameFull,
+            mime="application/octet-stream",
+            icon=":material/download:"
+        )
 
 def pg_empty(x=1):
     st.empty()
