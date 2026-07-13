@@ -553,7 +553,7 @@ def pg_enfant_adm():
     lst_parents
     df_parent
 
-    sel_parent = st.selectbox("Parent:", options=list(df_parent.keys()), format_func=lambda x:lst_parents[ x ])
+    sel_parent = st.selectbox("Parent:", options=list(lst_parents.keys()), format_func=lambda x:lst_parents[ x ])
     editor_df = st.data_editor(
         df, 
         key="enfant_edit", 
