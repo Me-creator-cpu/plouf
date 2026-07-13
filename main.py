@@ -220,22 +220,21 @@ def db_init_data(db_fullpath,bAddParent=False,bAddEnfant=False,bAddResa=False):
         db_table_to_df("t_enfant",connexion,True)
 
     if bAddResa:
-                       #(enfant_id, enfant_niveau, resa_date, resa_heure)
-        reservations = [(1,6,"11/07/2026","14:00"),
-                        (2,12,"18/07/2026","15:35"),
-                        (3,12,"17/07/2026","14:35"),
-                        (1,6,"11/07/2026","14:35"),
-                        (3,12,"13/07/2026","16:00")]
+                       #(enfant_id, resa_date, resa_heure)
+        reservations = [(1,"11/07/2026","14:00"),
+                        (2,"18/07/2026","15:35"),
+                        (3,"17/07/2026","14:35"),
+                        (1,"11/07/2026","14:35"),
+                        (3,"13/07/2026","16:00")]
         curseur.executescript("DROP TABLE IF EXISTS t_reservation;")
         curseur.execute("""CREATE TABLE IF NOT EXISTS t_reservation(
                         resa_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
                         enfant_id INTEGER,
-                        enfant_niveau INTEGER,
                         resa_date TEXT,
                         resa_heure TEXT
                         )""")
         curseur.executemany(
-                "INSERT INTO t_reservation (enfant_id, enfant_niveau, resa_date, resa_heure) VALUES (?, ?, ?, ?)",
+                "INSERT INTO t_reservation (enfant_id, resa_date, resa_heure) VALUES (?, ?, ?)",
                 reservations)
         connexion.commit()
         db_table_to_df("t_reservation",connexion,True)
