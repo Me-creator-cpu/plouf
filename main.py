@@ -156,13 +156,13 @@ def db_init_data(db_fullpath):
                 ("titi", "0103050700","test3@mail.com",0)]
         #curseur.execute("DROP TABLE IF EXISTS t_parent")
         curseur.executescript("DROP TABLE IF EXISTS t_parent;")
-        curseur.execute("alter table linksauthor add column 'parent_del' 'integer'")
+        #curseur.execute("alter table linksauthor add column 'parent_del' 'integer'")
         connexion.commit()
         curseur.execute("""CREATE TABLE IF NOT EXISTS t_parent(
                         parent_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
                         parent_name TEXT,
                         parent_tel TEXT,
-                        parent_mail TEXT
+                        parent_mail TEXT,
                         parent_del INTEGER
                         )""")
         curseur.executemany(
