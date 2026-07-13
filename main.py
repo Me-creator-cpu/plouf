@@ -37,7 +37,7 @@ column_config_parent={
     "parent_name": st.column_config.TextColumn( "Nom", pinned = True),
     "parent_tel": st.column_config.TextColumn( "Tél."),
     "parent_mail":st.column_config.TextColumn( "EMail"),
-    "parent_id_del": st.column_config.CheckboxColumn("Actif"),
+    "parent_id_del": st.column_config.CheckboxColumn("Désactivé"),
     "parent_id_del_s": st.column_config.NumberColumn(
         "Actif",
         min_value=0,
