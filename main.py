@@ -94,6 +94,13 @@ def db_drop_tests(db_fullpath):
     connexion.commit()
     connexion.close()
 
+def db_drop_table(db_fullpath,tablaname):
+    connexion = sqlite3.connect(db_fullpath)
+    curseur = connexion.cursor()
+    curseur.execute("DROP TABLE IF EXISTS " + tablaname)
+    connexion.commit()
+    connexion.close()
+
 #==================================================================================================
 def db_connection(db_fullpath):
     global bDebug
@@ -146,6 +153,8 @@ def db_init_data(db_fullpath):
         parents = [("arnaud", "0102030405","test1@mail.com",0), 
                 ("tata", "0607080910","test2@mail.com",0), 
                 ("titi", "0103050700","test3@mail.com",0)]
+        curseur.execute("DROP TABLE IF EXISTS t_parent")
+        connexion.commit()
         curseur.execute("""CREATE TABLE IF NOT EXISTS t_parent(
                         parent_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
                         parent_name TEXT,
