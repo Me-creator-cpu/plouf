@@ -567,7 +567,8 @@ def pg_home():
     db_table_to_df("t_enfant",connexion,True)
     db_table_to_df("t_reservation",connexion,True)
     db_connection_close(connexion)
-    st.empty()
+    st.divider()
+    st.link_button("Database",url:db)
 
 def pg_empty(x=1):
     st.empty()
