@@ -27,6 +27,25 @@ bDebug=False
 
 locale.setlocale(locale.LC_ALL, "fr_FR")
 
+col_pct=st.column_config.NumberColumn(
+        min_value=0,
+        max_value=100,
+        format="percent",
+    )
+column_config_enfant={
+    "enfant_id": st.column_config.NumberColumn( "ID", pinned = True ),
+    "enfant_name": st.column_config.TextColumn( "Prénom", pinned = True),
+    "parent_id": st.column_config.NumberColumn( "Parent", pinned = True),
+    "enfant_annee":st.column_config.NumberColumn( "Né en"),
+    "enfant_niveau": st.column_config.NumberColumn(
+        "Niveau",
+        min_value=0,
+        max_value=12,
+        format="%d ⭐",
+    ),
+    "enfant_age": st.column_config.NumberColumn("Age"),
+}
+
 def os_build_path(pathtobuild):
     os.makedirs(pathtobuild, exist_ok=True)
 
@@ -555,9 +574,10 @@ def pg_enfant_adm():
     sel_parent = st.selectbox('Parent', options, format_func=lambda x: dic[x])
     #st.write(a)
     df_filtered = df[df['parent_id'] == int(sel_parent)]
-    df_filtered['Age']=2026-df_filtered['enfant_annee']
+    df_filtered['enfant_age']=2026-df_filtered['enfant_annee']
     editor_df = st.data_editor(
         df_filtered, 
+        column_config=column_config_enfant,
         key="enfant_edit", 
         num_rows="dynamic", 
         width='stretch',
