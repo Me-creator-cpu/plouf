@@ -583,10 +583,7 @@ def pg_enfant_adm():
     db_connection_close(connexion)  
     subtitle("Liste des enfants ⬇️")
 
-    df
-    df_parent
-    result = pd.merge(df, df_parent, how="left", on=["parent_id", "parent_id"])
-    result
+    df = pd.merge(df, df_parent, how="left", on=["parent_id", "parent_id"])
 
     values = df_parent['parent_name'].tolist()
     options = df_parent['parent_id'].tolist()
