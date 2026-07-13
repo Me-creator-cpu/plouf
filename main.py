@@ -545,9 +545,7 @@ def pg_enfant_adm():
     connexion=db_connection(db)  
     df = db_table_to_df("t_enfant",connexion,False)
     df_parent = pd.read_sql_query("SELECT parent_id,parent_name FROM t_parent", connexion).T
-    cursor=connexion.cursor()
-    cursor.execute('SELECT parent_id,parent_name FROM t_parent')
-    lst_parents = cursor.fetchall()
+    lst_parents = connexion.cursor().execute('SELECT parent_id,parent_name FROM t_parent').fetchall()
     db_connection_close(connexion)  
     subtitle("Liste des enfants ⬇️")
     lst_parents
