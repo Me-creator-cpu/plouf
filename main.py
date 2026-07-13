@@ -47,9 +47,10 @@ column_config_parent={
 }
 
 column_config_enfant={
+    "parent_id": None, #st.column_config.NumberColumn( "Parent",),
+    "parent_name":st.column_config.TextColumn("Nom parent"),
     "enfant_id": st.column_config.NumberColumn( "ID", pinned = True ),
     "enfant_name": st.column_config.TextColumn( "Prénom"),
-    "parent_id": st.column_config.NumberColumn( "Parent"),
     "enfant_annee":st.column_config.NumberColumn( "Né en"),
     "enfant_niveau": st.column_config.NumberColumn(
         "Niveau",
