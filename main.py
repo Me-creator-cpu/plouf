@@ -568,7 +568,8 @@ def pg_home():
     db_table_to_df("t_reservation",connexion,True)
     db_connection_close(connexion)
     st.divider()
-    st.link_button("Database",url:db)
+    st.write(f'Database: {db}')
+    st.link_button("Database",db)
 
 def pg_empty(x=1):
     st.empty()
