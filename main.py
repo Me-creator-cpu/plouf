@@ -185,9 +185,7 @@ def db_init_data(db_fullpath,bAddParent=False,bAddEnfant=False,bAddResa=False):
         parents = [("arnaud", "0102030405","test1@mail.com",0), 
                 ("tata", "0607080910","test2@mail.com",0), 
                 ("titi", "0103050700","test3@mail.com",0)]
-        #curseur.execute("DROP TABLE IF EXISTS t_parent")
         curseur.executescript("DROP TABLE IF EXISTS t_parent;")
-        #curseur.execute("alter table t_parent add column 'parent_del' 'integer'")
         connexion.commit()
         curseur.execute("""CREATE TABLE IF NOT EXISTS t_parent(
                         parent_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
@@ -207,6 +205,7 @@ def db_init_data(db_fullpath,bAddParent=False,bAddEnfant=False,bAddResa=False):
         enfants = [("eva", 1, 6, 2016), 
                 ("jean", 1, 12, 2010), 
                 ("paulo", 3, 12, 1994)]
+        curseur.executescript("DROP TABLE IF EXISTS t_enfant;")
         curseur.execute("""CREATE TABLE IF NOT EXISTS t_enfant(
                         enfant_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
                         enfant_name TEXT,
@@ -227,6 +226,7 @@ def db_init_data(db_fullpath,bAddParent=False,bAddEnfant=False,bAddResa=False):
                         (3,12,"17/07/2026","14:35"),
                         (1,6,"11/07/2026","14:35"),
                         (3,12,"13/07/2026","16:00")]
+        curseur.executescript("DROP TABLE IF EXISTS t_reservation;")
         curseur.execute("""CREATE TABLE IF NOT EXISTS t_reservation(
                         resa_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
                         enfant_id INTEGER,
