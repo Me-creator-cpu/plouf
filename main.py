@@ -163,10 +163,10 @@ def db_init_data(db_fullpath):
                         parent_name TEXT,
                         parent_tel TEXT,
                         parent_mail TEXT,
-                        parent_del INTEGER
+                        parent_id_del INTEGER
                         )""")
         curseur.executemany(
-                "INSERT INTO t_parent (parent_name, parent_tel, parent_mail,parent_del) VALUES (?, ?, ?, ?)",
+                "INSERT INTO t_parent (parent_name, parent_tel, parent_mail,parent_id_del) VALUES (?, ?, ?, ?)",
                 parents)
         connexion.commit()
         db_table_to_df("t_parent",connexion,True)
@@ -415,7 +415,11 @@ def show_diff(
             conn = db_connection(db)
             for r in range(rows):
                 id=int(deleted[0][r])
-                sql = f"DELETE FROM {table_name} WHERE {key_field} = {id}"
+                #sql = f"DELETE FROM {table_name} WHERE {key_field} = {id}"
+                if table_name == 't_parent':
+                    sql = f"UPDATE {table_name} SET {key_field}_del=1 WHERE {key_field} = {id}"
+                else:
+                    sql = f"DELETE FROM {table_name} WHERE {key_field} = {id}"
                 if bDebug:
                     st.write(sql)
                 cur = conn.cursor()
