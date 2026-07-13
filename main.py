@@ -6,6 +6,14 @@ import locale
 import os
 import sqlite3
 
+#Login
+import hashlib
+
+#GitHub 
+from pathlib import Path
+from github import Auth
+from github import Github
+
 #https://gist.github.com/GeorgePearse/bb951fde95fded5b2a1323fc1c29b8e7
 
 data_path = './data/'
@@ -569,16 +577,10 @@ def pg_home():
     db_table_to_df("t_enfant",connexion,True)
     db_table_to_df("t_reservation",connexion,True)
     db_connection_close(connexion)
-    st.divider()
-    st.write(f'Database: {db}')
-    st.download_button(
-        label="Download Database",
-        data=db,
-        file_name=db,
-        mime="text/csv",
-        icon=":material/download:",
-    )
 
+def pg_options_adm():
+    global db
+    st.subheader(f'Database: {db}',divider=True)
     with open(db, "rb") as fp:
         btn = st.download_button(
             label="Download db file",
@@ -629,6 +631,7 @@ pages = {
         st.Page(pg_enfant_adm, title='Gérer enfants',icon="🧬"),
         st.Page(pg_resa_get, title='Voir réservations',icon="🧬"),
         st.Page(pg_empty, title='Planning prof',icon="📅"),
+        st.Page(pg_options_adm, title='Options',icon="📅"),
     ],
 }
 

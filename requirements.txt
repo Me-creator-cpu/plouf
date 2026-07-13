@@ -1,0 +1,11 @@
+streamlit
+streamlit_javascript
+user_agents
+streamlit_dynamic_filters
+openpyxl
+extra_streamlit_components
+matplotlib
+graphviz
+PyGithub
+uuid
+streamlit_calendar
