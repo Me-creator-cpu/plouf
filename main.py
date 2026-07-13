@@ -548,6 +548,9 @@ def pg_enfant_adm():
     lst_parents = connexion.cursor().execute('SELECT parent_id,parent_name FROM t_parent').fetchall
     db_connection_close(connexion)  
     subtitle("Liste des enfants ⬇️")
+    lst_parents
+    df_parent
+    
     sel_parent = st.selectbox("Parent:", options=list(lst_parents.keys()), format_func=lambda x:lst_parents[ x ])
     editor_df = st.data_editor(
         df, 
