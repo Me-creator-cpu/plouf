@@ -460,6 +460,7 @@ def email_valid(email):
     ret=False
     try:
         chk=re.match(email_validate_pattern, email)
+        st.write(chk)
         ret=True
     except:
         ret=False
