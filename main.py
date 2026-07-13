@@ -583,6 +583,8 @@ def pg_enfant_adm():
     db_connection_close(connexion)  
     subtitle("Liste des enfants ⬇️")
 
+    df
+    df_parent
     result = pd.concat([df, df_parent], axis='parent_id')
     result
 
