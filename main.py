@@ -548,27 +548,15 @@ def pg_enfant_adm():
     #lst_parents = connexion.cursor().execute('SELECT parent_id,parent_name FROM t_parent').fetchall()
     db_connection_close(connexion)  
     subtitle("Liste des enfants ⬇️")
-    df_parent
-    dd=dict(df_parent.T)
-    dd
-    #mode = st.selectbox("Calendar Mode:", options=list(calendar_display.keys()), format_func=lambda x:calendar_display[ x ])
-    #sel_parent = st.selectbox("Parent:", options=list(lst_parents.keys()), format_func=lambda x:lst_parents[ x ])
-    #sel_parent = st.selectbox("Parent:", options=list(dd), format_func=lambda x:dd[ x ])
-    
-    # initialize list of lists
-    data = [['Le goumet', 10], ['The Alcove', 15], ['Mojo Restaurant', 14], ['Mojo Restaurant', 1]]
-
-    # Create the pandas DataFrame
-    df = pd.DataFrame(data, columns=['Name', 'ID'])
 
     values = df_parent['parent_name'].tolist()
     options = df_parent['parent_id'].tolist()
     dic = dict(zip(options, values))
-    a = st.selectbox('Choose a restaurant', options, format_func=lambda x: dic[x])
-    st.write(a)
+    sel_parent = st.selectbox('Choose a restaurant', options, format_func=lambda x: dic[x])
+    #st.write(a)
     
     editor_df = st.data_editor(
-        df, 
+        df.loc['parent_id'==sel_parent], 
         key="enfant_edit", 
         num_rows="dynamic", 
         width='stretch',
