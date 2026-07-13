@@ -549,10 +549,11 @@ def pg_enfant_adm():
     db_connection_close(connexion)  
     subtitle("Liste des enfants ⬇️")
     df_parent
+    dd=dict(df_parent)
 
     #mode = st.selectbox("Calendar Mode:", options=list(calendar_display.keys()), format_func=lambda x:calendar_display[ x ])
     #sel_parent = st.selectbox("Parent:", options=list(lst_parents.keys()), format_func=lambda x:lst_parents[ x ])
-    sel_parent = st.selectbox("Parent:", options=list(df_parent), format_func=lambda x:df_parent[ x ])
+    sel_parent = st.selectbox("Parent:", options=list(df_paddrent), format_func=lambda x:dd[ x ])
     editor_df = st.data_editor(
         df, 
         key="enfant_edit", 
