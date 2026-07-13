@@ -569,7 +569,13 @@ def pg_home():
     db_connection_close(connexion)
     st.divider()
     st.write(f'Database: {db}')
-    st.link_button("Database",db)
+    st.download_button(
+        label="Download Database",
+        data=db,
+        file_name=db,
+        mime="text/csv",
+        icon=":material/download:",
+    )
 
 def pg_empty(x=1):
     st.empty()
