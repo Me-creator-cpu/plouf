@@ -555,6 +555,7 @@ def pg_enfant_adm():
     sel_parent = st.selectbox('Parent', options, format_func=lambda x: dic[x])
     #st.write(a)
     df_filtered = df[df['parent_id'] == int(sel_parent)]
+    df_filtered['Age']=2026-df_filtered['enfant_annee']
     editor_df = st.data_editor(
         df_filtered, 
         key="enfant_edit", 
