@@ -552,7 +552,7 @@ def pg_enfant_adm():
     values = df_parent['parent_name'].tolist()
     options = df_parent['parent_id'].tolist()
     dic = dict(zip(options, values))
-    sel_parent = st.selectbox('Choose a restaurant', options, format_func=lambda x: dic[x])
+    sel_parent = st.selectbox('Parent', options, format_func=lambda x: dic[x])
     #st.write(a)
     df_filtered = df[df['parent_id'] == int(sel_parent)]
     editor_df = st.data_editor(
