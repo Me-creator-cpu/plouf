@@ -336,10 +336,14 @@ def show_diff(
                     if c != 'index':
                         if target_base[c][r] != '#####':
                             sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {id}"
-                            if c == 'parent_mail':
-                                st.toast(email_valid(target_base[c][r]))
-                            cur = conn.cursor()
-                            cur.execute(sql)
+                            if c.lower().endswith("_mail"):
+                                if email_valid(target_base[c][r]):
+                                    cur = conn.cursor()
+                                    cur.execute(sql)
+                            else:
+                                cur = conn.cursor()
+                                cur.execute(sql)
+
                             if bDebug:
                                 st.write(sql)
                             #bStatus = bStatus or db_exec_sql(sql)
@@ -460,7 +464,6 @@ def email_valid(email):
     ret=False
     try:
         chk=re.match(email_validate_pattern, email)
-        st.write(chk)
         ret=False if chk is None else True
     except:
         ret=False
