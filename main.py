@@ -139,11 +139,7 @@ def db_table_to_df(tablename,conn,bShowTab=False):
         df
     return df
 
-def db_init_data(db_fullpath):
-    bAddParent = True
-    bAddEnfant = False
-    bAddResa = False
-
+def db_init_data(db_fullpath,bAddParent=False,bAddEnfant=False,bAddResa=False):
     bShowTable = not(bAddParent) and not(bAddEnfant) and not(bAddResa)
 
     connexion = sqlite3.connect(db_fullpath)
@@ -240,6 +236,9 @@ def init_buttons():
 
     if st.button("Init data"):
         db_drop_tests(db)
+        bAddParent = st.toggle('Parents',True)
+        bAddEnfant = st.toggle('Enfants',False)
+        bAddResa = st.toggle('Réservtions',False)
         db_init_data(db)
 
 #==================================================================================================
