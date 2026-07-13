@@ -234,12 +234,12 @@ def init_buttons():
             st.write('Read DB...')
             db_read_test(db)
 
+    bAddParent = st.toggle('Parents',True)
+    bAddEnfant = st.toggle('Enfants',False)
+    bAddResa = st.toggle('Réservtions',False)
     if st.button("Init data"):
         db_drop_tests(db)
-        bAddParent = st.toggle('Parents',True)
-        bAddEnfant = st.toggle('Enfants',False)
-        bAddResa = st.toggle('Réservtions',False)
-        db_init_data(db)
+        db_init_data(db,bAddParent,bAddEnfant,bAddResa)
 
 #==================================================================================================
 # Fonctions données
