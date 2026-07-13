@@ -583,9 +583,9 @@ def pg_enfant_adm():
     db_connection_close(connexion)  
     subtitle("Liste des enfants ⬇️")
 
-    result = pd.concat([df, df_parent], axis=2)
+    result = pd.concat([df, df_parent], axis='parent_id')
     result
-    
+
     values = df_parent['parent_name'].tolist()
     options = df_parent['parent_id'].tolist()
     dic = dict(zip(options, values))
