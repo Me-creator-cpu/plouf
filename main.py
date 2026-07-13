@@ -5,6 +5,7 @@ import locale
 
 import os
 import sqlite3
+import re
 
 #Login
 import hashlib
@@ -335,6 +336,8 @@ def show_diff(
                     if c != 'index':
                         if target_base[c][r] != '#####':
                             sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {id}"
+                            if c == 'parent_email':
+                                st.toast(email_valid(target_base[c][r]))
                             cur = conn.cursor()
                             cur.execute(sql)
                             if bDebug:
@@ -451,6 +454,15 @@ def get_cell_value(d,src,ret,valsrc):
 
 def subtitle(txt=''):
     st.subheader(f'{txt}',divider=True)
+
+def email_valid(email):
+    email_validate_pattern = r"^\S+@\S+\.\S+$"
+    ret=False
+    try:
+        chk=re.match(email_validate_pattern, email)
+        ret=True
+    except:
+        ret=False
 
 def db_parents_get(ID_Parent = None):
     global db
