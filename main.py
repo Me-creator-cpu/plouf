@@ -544,8 +544,10 @@ def pg_enfant_adm():
     global db
     connexion=db_connection(db)  
     df = db_table_to_df("t_enfant",connexion,False)
+    df_parent = pd.read_sql_query("SELECT parent_id,parent_name FROM t_parent", connexion)
     db_connection_close(connexion)  
     subtitle("Liste des enfants ⬇️")
+    sel_parent = st.selectbox("Parent:", options=list(df_parent.keys()), format_func=lambda x:df_parent[ x ])
     editor_df = st.data_editor(
         df, 
         key="enfant_edit", 
