@@ -553,7 +553,20 @@ def pg_enfant_adm():
     dd
     #mode = st.selectbox("Calendar Mode:", options=list(calendar_display.keys()), format_func=lambda x:calendar_display[ x ])
     #sel_parent = st.selectbox("Parent:", options=list(lst_parents.keys()), format_func=lambda x:lst_parents[ x ])
-    sel_parent = st.selectbox("Parent:", options=list(dd), format_func=lambda x:dd[ x ])
+    #sel_parent = st.selectbox("Parent:", options=list(dd), format_func=lambda x:dd[ x ])
+    
+    # initialize list of lists
+    data = [['Le goumet', 10], ['The Alcove', 15], ['Mojo Restaurant', 14], ['Mojo Restaurant', 1]]
+
+    # Create the pandas DataFrame
+    df = pd.DataFrame(data, columns=['Name', 'ID'])
+
+    values = df['Name'].tolist()
+    options = df['ID'].tolist()
+    dic = dict(zip(options, values))
+    a = st.selectbox('Choose a restaurant', options, format_func=lambda x: dic[x])
+    st.write(a)
+    
     editor_df = st.data_editor(
         df, 
         key="enfant_edit", 
