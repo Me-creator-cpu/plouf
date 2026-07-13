@@ -336,7 +336,7 @@ def show_diff(
                     if c != 'index':
                         if target_base[c][r] != '#####':
                             sql = f"UPDATE {table_name} SET {c}='{target_base[c][r]}' WHERE {key_field} = {id}"
-                            if c == 'parent_email':
+                            if c == 'parent_mail':
                                 st.toast(email_valid(target_base[c][r]))
                             cur = conn.cursor()
                             cur.execute(sql)
