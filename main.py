@@ -32,6 +32,19 @@ col_pct=st.column_config.NumberColumn(
         max_value=100,
         format="percent",
     )
+column_config_parent={
+    "parent_id": st.column_config.NumberColumn( "ID", pinned = True ),
+    "parent_name": st.column_config.TextColumn( "Nom", pinned = True),
+    "parent_tel": st.column_config.TextColumn( "Tél."),
+    "parent_mail":st.column_config.TextColumn( "EMail"),
+    "parent_del": st.column_config.CheckboxColumn(
+        "Actif",
+        min_value=0,
+        max_value=1,
+        format="%d ⭐",
+    )
+}
+
 column_config_enfant={
     "enfant_id": st.column_config.NumberColumn( "ID", pinned = True ),
     "enfant_name": st.column_config.TextColumn( "Prénom", pinned = True),
@@ -528,6 +541,7 @@ def pg_parent_adm():
     subtitle("Liste des parents ⬇️")
     editor_df = st.data_editor(
         df, 
+        column_config=column_config_parent,
         key="parent_edit", 
         num_rows="dynamic", 
         width='stretch',
