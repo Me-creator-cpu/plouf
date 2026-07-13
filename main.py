@@ -463,6 +463,7 @@ def email_valid(email):
         ret=True
     except:
         ret=False
+    return ret
 
 def db_parents_get(ID_Parent = None):
     global db
