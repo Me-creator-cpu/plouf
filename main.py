@@ -143,17 +143,18 @@ def db_init_data(db_fullpath):
 
     if bAddParent:
                 #  (parent_name, parent_tel, parent_mail)
-        parents = [("arnaud", "0102030405","test1@mail.com"), 
-                ("tata", "0607080910","test2@mail.com"), 
-                ("titi", "0103050700","test3@mail.com")]
+        parents = [("arnaud", "0102030405","test1@mail.com",0), 
+                ("tata", "0607080910","test2@mail.com",0), 
+                ("titi", "0103050700","test3@mail.com",0)]
         curseur.execute("""CREATE TABLE IF NOT EXISTS t_parent(
                         parent_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
                         parent_name TEXT,
                         parent_tel TEXT,
                         parent_mail TEXT
+                        parent_del INTEGER
                         )""")
         curseur.executemany(
-                "INSERT INTO t_parent (parent_name, parent_tel, parent_mail) VALUES (?, ?, ?)",
+                "INSERT INTO t_parent (parent_name, parent_tel, parent_mail,parent_del) VALUES (?, ?, ?, ?)",
                 parents)
         connexion.commit()
         db_table_to_df("t_parent",connexion,True)
@@ -631,7 +632,7 @@ pages = {
         st.Page(pg_enfant_adm, title='Gérer enfants',icon="🧬"),
         st.Page(pg_resa_get, title='Voir réservations',icon="🧬"),
         st.Page(pg_empty, title='Planning prof',icon="📅"),
-        st.Page(pg_options_adm, title='Options',icon="📅"),
+        st.Page(pg_options_adm, title='Options',icon="🛠️"),
     ],
 }
 
