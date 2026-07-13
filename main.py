@@ -596,7 +596,7 @@ def pg_enfant_adm():
     editor_df = st.data_editor(
         df_filtered, 
         column_config=column_config_enfant,
-        column_order=['enfant_id','enfant_name','enfant_niveau','enfant_age','parent_name'],
+        column_order=['enfant_id','enfant_name','enfant_niveau','enfant_age','enfant_annee','parent_name'],
         key="enfant_edit", 
         num_rows="dynamic", 
         width='stretch',
