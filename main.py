@@ -585,7 +585,7 @@ def pg_enfant_adm():
 
     df
     df_parent
-    result = pd.concat([df, df_parent], axis='parent_id')
+    result = pd.merge(df, df_parent, how="left", on=["parent_id", "parent_id"])
     result
 
     values = df_parent['parent_name'].tolist()
