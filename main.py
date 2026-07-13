@@ -34,7 +34,7 @@ col_pct=st.column_config.NumberColumn(
     )
 column_config_parent={
     "parent_id": st.column_config.NumberColumn( "ID", pinned = True ),
-    "parent_name": st.column_config.TextColumn( "Nom", pinned = True),
+    "parent_name": st.column_config.TextColumn( "Nom"),
     "parent_tel": st.column_config.TextColumn( "Tél."),
     "parent_mail":st.column_config.TextColumn( "EMail"),
     "parent_id_del": st.column_config.CheckboxColumn("Désactivé"),
@@ -48,8 +48,8 @@ column_config_parent={
 
 column_config_enfant={
     "enfant_id": st.column_config.NumberColumn( "ID", pinned = True ),
-    "enfant_name": st.column_config.TextColumn( "Prénom", pinned = True),
-    "parent_id": st.column_config.NumberColumn( "Parent", pinned = True),
+    "enfant_name": st.column_config.TextColumn( "Prénom"),
+    "parent_id": st.column_config.NumberColumn( "Parent"),
     "enfant_annee":st.column_config.NumberColumn( "Né en"),
     "enfant_niveau": st.column_config.NumberColumn(
         "Niveau",
