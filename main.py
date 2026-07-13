@@ -234,6 +234,7 @@ def init_buttons():
             st.write('Read DB...')
             db_read_test(db)
 
+    st.subheader('Initialisation données tests')
     bAddParent = st.toggle('Parents',True)
     bAddEnfant = st.toggle('Enfants',False)
     bAddResa = st.toggle('Réservtions',False)
