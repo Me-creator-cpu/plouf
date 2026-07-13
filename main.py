@@ -635,9 +635,6 @@ pages = {
     'Home':[ 
         st.Page(pg_home, title='Home', icon="🏠"),
     ],
-    'Init data':[
-        st.Page(pg_init_data, title='Init data', icon="🚀"),
-    ],
     'User':[
         st.Page(pg_enfant_get, title='Enfant', icon="🚀"),
         st.Page(pg_resa_create, title='Réservation', icon="🧰"),
@@ -648,6 +645,9 @@ pages = {
         st.Page(pg_enfant_adm, title='Gérer enfants',icon="🧬"),
         st.Page(pg_resa_get, title='Voir réservations',icon="🧬"),
         st.Page(pg_empty, title='Planning prof',icon="📅"),
+    ],
+    'Options':[    
+        st.Page(pg_init_data, title='Init data', icon="🚀"),
         st.Page(pg_options_adm, title='Options',icon="🛠️"),
     ],
 }
