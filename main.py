@@ -561,7 +561,7 @@ def pg_enfant_adm():
     # Create the pandas DataFrame
     df = pd.DataFrame(data, columns=['Name', 'ID'])
 
-    values = df_parent['parent_ame'].tolist()
+    values = df_parent['parent_name'].tolist()
     options = df_parent['parent_id'].tolist()
     dic = dict(zip(options, values))
     a = st.selectbox('Choose a restaurant', options, format_func=lambda x: dic[x])
