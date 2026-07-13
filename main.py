@@ -234,7 +234,7 @@ def init_buttons():
             st.write('Read DB...')
             db_read_test(db)
 
-    st.subheader('Initialisation données tests')
+    subtitle('Initialisation données tests')
     bAddParent = st.toggle('Parents',True)
     bAddEnfant = st.toggle('Enfants',False)
     bAddResa = st.toggle('Réservtions',False)
@@ -298,7 +298,7 @@ def show_diff(
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.subheader("Données modifiées")
+        subtitle("Données modifiées")
 
         change_markers = changes.copy()
         for cl in change_markers:
@@ -356,7 +356,7 @@ def show_diff(
                 st.warning('Erreur dans la mise à jour')
 
     with col2:
-        st.subheader("Lignes créées")
+        subtitle("Lignes créées")
         inserted = pd.DataFrame(editor_key.get("added_rows"))
         st.dataframe(inserted, width='stretch')
         
@@ -404,7 +404,7 @@ def show_diff(
                 st.warning('Erreur dans la création')
 
     with col3:
-        st.subheader("Lignes supprimées")
+        subtitle("Lignes supprimées")
         deleted = pd.DataFrame(editor_key.get("deleted_rows"))
         st.dataframe(deleted, width='stretch')
         if st.button('Supprimer', disabled=not has_data(deleted)):
@@ -449,6 +449,8 @@ def get_cell_value(d,src,ret,valsrc):
     except:
         return None
 
+def subtitle(txt=''):
+    st.subheader(f'{txt}',divider=True)
 
 def db_parents_get(ID_Parent = None):
     global db
@@ -487,7 +489,7 @@ def pg_parent_adm():
     connexion=db_connection(db)  
     df = db_table_to_df("t_parent",connexion,False)
     db_connection_close(connexion)
-    st.subheader("Liste des parents ⬇️")
+    subtitle("Liste des parents ⬇️")
     editor_df = st.data_editor(
         df, 
         key="parent_edit", 
@@ -525,8 +527,8 @@ def pg_enfant_adm():
     global db
     connexion=db_connection(db)  
     df = db_table_to_df("t_enfant",connexion,False)
-    db_connection_close(connexion)    
-    st.subheader("Liste des enfants ⬇️")
+    db_connection_close(connexion)  
+    subtitle("Liste des enfants ⬇️")
     editor_df = st.data_editor(
         df, 
         key="enfant_edit", 
@@ -597,7 +599,7 @@ def pg_home():
 
 def pg_options_adm():
     global db
-    st.subheader(f'Database: {db}',divider=True)
+    subtitle(f'Database: {db}')
     with open(db, "rb") as fp:
         btn = st.download_button(
             label="Download db file",
