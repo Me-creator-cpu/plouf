@@ -544,7 +544,7 @@ def pg_enfant_adm():
     global db
     connexion=db_connection(db)  
     df = db_table_to_df("t_enfant",connexion,False)
-    df_parent = pd.read_sql_query("SELECT parent_id,parent_name FROM t_parent", connexion)
+    df_parent = pd.read_sql_query("SELECT parent_id,parent_name FROM t_parent", connexion).T
     cursor=connexion.cursor()
     cursor.execute('SELECT parent_id,parent_name FROM t_parent')
     lst_parents = cursor.fetchall()
@@ -555,7 +555,7 @@ def pg_enfant_adm():
 
     #mode = st.selectbox("Calendar Mode:", options=list(calendar_display.keys()), format_func=lambda x:calendar_display[ x ])
     #sel_parent = st.selectbox("Parent:", options=list(lst_parents.keys()), format_func=lambda x:lst_parents[ x ])
-    sel_parent = st.selectbox("Parent:", options=list(df_parent.T))
+    sel_parent = st.selectbox("Parent:", options=list(df_parent))
     editor_df = st.data_editor(
         df, 
         key="enfant_edit", 
