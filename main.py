@@ -624,7 +624,7 @@ def pg_enfant_adm():
     df_filtered['parent_new']='test'
 
     column_config_enfant2={
-        "parent_id": None, #st.column_config.NumberColumn( "Parent",),
+        #"parent_id": None, #st.column_config.NumberColumn( "Parent",),
         "parent_name":st.column_config.TextColumn("Nom parent"),
         "enfant_id": st.column_config.NumberColumn( "ID", pinned = True ),
         "enfant_name": st.column_config.TextColumn( "Prénom"),
@@ -636,7 +636,7 @@ def pg_enfant_adm():
             format="%d ⭐",
         ),
         "enfant_age": st.column_config.NumberColumn("Age"),
-        "parent_new": st.column_config.SelectboxColumn(
+        "parent_id": st.column_config.SelectboxColumn(
                 "Parent (nouveau)",
                 width="medium",
                 options=options,
