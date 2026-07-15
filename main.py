@@ -319,6 +319,9 @@ def has_data(df):
     except:
         return False
     
+def age(year_born=2026):
+    return datetime.datetime.now().year-year_born
+
 def show_diff(
     source_df: pd.DataFrame, modified_df: pd.DataFrame, editor_key: dict, table_name: str, key_field: str
 ) -> None:
@@ -616,7 +619,9 @@ def pg_enfant_adm():
     sel_parent = st.selectbox('Parent', options, format_func=lambda x: dic[x])
     #st.write(a)
     df_filtered = df[df['parent_id'] == int(sel_parent)]
-    df_filtered['enfant_age']=2026-df_filtered['enfant_annee']
+    #df_filtered['enfant_age']=datetime.datetime.now().year-df_filtered['enfant_annee']
+    df_filtered['enfant_age']=age(df_filtered['enfant_annee'])
+    df_filtered['parent_new']=None
     editor_df = st.data_editor(
         df_filtered, 
         column_config=column_config_enfant,
