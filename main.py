@@ -680,6 +680,8 @@ def pg_options_adm():
             mime="application/octet-stream",
             icon=":material/download:"
         )
+    subtitle('Images')
+    pic_list()
 
 def pg_empty(x=1):
     st.empty()
