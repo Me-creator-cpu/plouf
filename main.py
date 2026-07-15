@@ -34,6 +34,18 @@ col_pct=st.column_config.NumberColumn(
         max_value=100,
         format="percent",
     )
+
+col_parent_select=st.column_config.SelectboxColumn(
+            "Parent",
+            width="medium",
+            options=[
+                "📊 Data Exploration",
+                "📈 Data Visualization",
+                "🤖 LLM",
+            ],
+            required=True,
+        )
+
 column_config_parent={
     "parent_id": st.column_config.NumberColumn( "ID", pinned = True ),
     "parent_name": st.column_config.TextColumn( "Nom"),
@@ -61,6 +73,16 @@ column_config_enfant={
         format="%d ⭐",
     ),
     "enfant_age": st.column_config.NumberColumn("Age"),
+    "parent_new": st.column_config.SelectboxColumn(
+            "Parent (nouveau)",
+            width="medium",
+            options=[
+                "📊 Data Exploration",
+                "📈 Data Visualization",
+                "🤖 LLM",
+            ],
+            required=True,
+        )
 }
 
 def os_build_path(pathtobuild):
