@@ -621,7 +621,7 @@ def pg_enfant_adm():
     df_filtered = df[df['parent_id'] == int(sel_parent)]
     #df_filtered['enfant_age']=datetime.datetime.now().year-df_filtered['enfant_annee']
     df_filtered['enfant_age']=age(df_filtered['enfant_annee'])
-    df_filtered['parent_new']=None
+    df_filtered['parent_new']='test'
     editor_df = st.data_editor(
         df_filtered, 
         column_config=column_config_enfant,
