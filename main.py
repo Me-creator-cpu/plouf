@@ -624,7 +624,7 @@ def pg_enfant_adm():
 
     column_config_enfant2={
         #"parent_id": None, #st.column_config.NumberColumn( "Parent",),
-        "parent_name":st.column_config.TextColumn("Nom parent"),
+        #"parent_name":st.column_config.TextColumn("Nom parent"),
         "enfant_id": st.column_config.NumberColumn( "ID", pinned = True ),
         "enfant_name": st.column_config.TextColumn( "Prénom"),
         "enfant_annee":st.column_config.NumberColumn( "Né en"),
@@ -636,7 +636,7 @@ def pg_enfant_adm():
         ),
         "enfant_age": st.column_config.NumberColumn("Age"),
         "parent_id": st.column_config.SelectboxColumn(
-                "Parent (nouveau)",
+                "Nom parent",
                 width="medium",
                 options=options,
                 format_func=lambda x: dic[x],
@@ -647,7 +647,7 @@ def pg_enfant_adm():
     editor_df = st.data_editor(
         df_filtered, 
         column_config=column_config_enfant2,
-        column_order=['enfant_id','enfant_name','enfant_niveau','enfant_age','enfant_annee','parent_name','parent_id'],
+        column_order=['enfant_id','enfant_name','enfant_niveau','enfant_age','enfant_annee','parent_id'],
         key="enfant_edit", 
         num_rows="dynamic", 
         width='stretch',
