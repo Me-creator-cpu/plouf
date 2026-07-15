@@ -10,6 +10,8 @@ import re
 #Login
 import hashlib
 
+from pictures import *
+
 #GitHub 
 from pathlib import Path
 from github import Auth
