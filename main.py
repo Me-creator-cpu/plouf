@@ -639,7 +639,8 @@ def pg_enfant_adm():
         "parent_new": st.column_config.SelectboxColumn(
                 "Parent (nouveau)",
                 width="medium",
-                options=df_parent,
+                options=options,
+                format_func=lambda x: dic[x],
                 required=True,
             )
     }
