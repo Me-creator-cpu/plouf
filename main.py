@@ -621,7 +621,6 @@ def pg_enfant_adm():
     df_filtered = df[df['parent_id'] == int(sel_parent)]
     #df_filtered['enfant_age']=datetime.datetime.now().year-df_filtered['enfant_annee']
     df_filtered['enfant_age']=age(df_filtered['enfant_annee'])
-    df_filtered['parent_new']='test'
 
     column_config_enfant2={
         #"parent_id": None, #st.column_config.NumberColumn( "Parent",),
