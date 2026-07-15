@@ -622,9 +622,31 @@ def pg_enfant_adm():
     #df_filtered['enfant_age']=datetime.datetime.now().year-df_filtered['enfant_annee']
     df_filtered['enfant_age']=age(df_filtered['enfant_annee'])
     df_filtered['parent_new']='test'
+
+    column_config_enfant2={
+        "parent_id": None, #st.column_config.NumberColumn( "Parent",),
+        "parent_name":st.column_config.TextColumn("Nom parent"),
+        "enfant_id": st.column_config.NumberColumn( "ID", pinned = True ),
+        "enfant_name": st.column_config.TextColumn( "Prénom"),
+        "enfant_annee":st.column_config.NumberColumn( "Né en"),
+        "enfant_niveau": st.column_config.NumberColumn(
+            "Niveau",
+            min_value=0,
+            max_value=12,
+            format="%d ⭐",
+        ),
+        "enfant_age": st.column_config.NumberColumn("Age"),
+        "parent_new": st.column_config.SelectboxColumn(
+                "Parent (nouveau)",
+                width="medium",
+                options=df_parent,
+                required=True,
+            )
+    }
+
     editor_df = st.data_editor(
         df_filtered, 
-        column_config=column_config_enfant,
+        column_config=column_config_enfant2,
         column_order=['enfant_id','enfant_name','enfant_niveau','enfant_age','enfant_annee','parent_name','parent_new'],
         key="enfant_edit", 
         num_rows="dynamic", 
