@@ -520,6 +520,17 @@ people = [
     {"id": "3", "title": "Three"}
 ]
 
+calendar_display={
+        "daygrid":"Day",
+        "timegrid":"Time",
+        "timeline":"Timeline",
+        "resource-daygrid":"Resource: Day",
+        "resource-timegrid":"Resource: Time",
+        "resource-timeline":"Resource: Timeline",
+        "list":"List",
+        "multimonth":"Multi months",
+}
+
 calendar_options = {
     "editable": "true",
     "navLinks": "true",
@@ -611,7 +622,84 @@ def pg_home():
     st.write(db_table_to_df("t_reservation",True))
 
 def pg_cal_adm():
-    global people
+    global people,calendar_display,calendar_options
+    initialDate='2026-05-12'
+    calendar_groupby = "level" #"title" #"building"    
+    st.title("Planning")
+
+    mode = st.selectbox("Calendar Mode:", options=list(calendar_display.keys()), format_func=lambda x:calendar_display[ x ])
+
+    if "resource" in mode:
+        if mode == "resource-daygrid":
+            calendar_options = {
+                **calendar_options,
+                "initialDate": initialDate,
+                "initialView": "resourceDayGridDay",
+                "firstweekday": 0,
+                "resourceGroupField": calendar_groupby,
+            }
+        elif mode == "resource-timeline":
+            calendar_options = {
+                **calendar_options,
+                "headerToolbar": {
+                    "left": "today prev,next",
+                    "center": "title",
+                    "right": "resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth",
+                },
+                "initialDate": initialDate,
+                "initialView": "resourceTimelineDay",
+                "firstweekday": 0,
+                "resourceGroupField": calendar_groupby,
+            }
+        elif mode == "resource-timegrid":
+            calendar_options = {
+                **calendar_options,
+                "initialDate": initialDate,
+                "initialView": "resourceTimeGridDay",
+                "firstweekday": 0,
+                "resourceGroupField": calendar_groupby,
+            }
+    else:
+        if mode == "daygrid":
+            calendar_options = {
+                **calendar_options,
+                "headerToolbar": {
+                    "left": "today prev,next",
+                    "center": "title",
+                    "right": "dayGridDay,dayGridWeek,dayGridMonth",
+                },
+                "initialDate": initialDate,
+                "initialView": "dayGridMonth",
+                "firstweekday": 0,
+            }
+        elif mode == "timegrid":
+            calendar_options = {
+                **calendar_options,
+                "initialView": "timeGridWeek",
+            }
+        elif mode == "timeline":
+            calendar_options = {
+                **calendar_options,
+                "headerToolbar": {
+                    "left": "today prev,next",
+                    "center": "title",
+                    "right": "timelineDay,timelineWeek,timelineMonth",
+                },
+                "initialDate": initialDate,
+                "initialView": "timelineMonth",
+            }
+        elif mode == "list":
+            calendar_options = {
+                **calendar_options,
+                "initialDate": initialDate,
+                "initialView": "listMonth",
+            }
+        elif mode == "multimonth":
+            calendar_options = {
+                **calendar_options,
+                "initialView": "multiMonthYear",
+            }
+
     df_parent=db_table_to_df("t_parent",True)
     df_enfant=db_table_to_df("t_enfant",True)
     df_resa=db_table_to_df("t_reservation",True)
