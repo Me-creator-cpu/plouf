@@ -511,13 +511,13 @@ events = [
         "location": "LA",
         "start": "2026-07-16 14:00",
         "end": "2026-07-16 16:00",
-        "resourceId": "b",
+        "resourceId": "1",
     }
 ]
 people = [
-    {"id": "a", "title": "Jeff"},
-    {"id": "b", "title": "John"},
-    {"id": "c", "title": "Both"}
+    {"id": "1", "title": "One"},
+    {"id": "2", "title": "Two"},
+    {"id": "3", "title": "Three"}
 ]
 
 calendar_options = {
@@ -611,6 +611,17 @@ def pg_home():
     st.write(db_table_to_df("t_reservation",True))
 
 def pg_cal_adm():
+    global people
+    df_parent=db_table_to_df("t_parent",True)
+    df_enfant=db_table_to_df("t_enfant",True)
+    df_resa=db_table_to_df("t_reservation",True)
+
+    df = pd.merge(df_resa, df_enfant, how="left", on=["enfant_id", "enfant_id"])
+    df = pd.merge(df, df_parent, how="left", on=["parent_id", "parent_id"])   
+    people = df_enfant.copy(deep=True) 
+    people['id'] = people['enfant_id']
+    people['title'] = people['enfant_name']
+
     state = build_calendar()
 
 def pg_options_adm():
