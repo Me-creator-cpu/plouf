@@ -544,7 +544,7 @@ def pg_home():
     db_table_to_df("t_reservation",True)
 
 def pg_options_adm():
-    global db
+    db=db_get_path()
     subtitle(f'Database: {db}')
     with open(db, "rb") as fp:
         btn = st.download_button(

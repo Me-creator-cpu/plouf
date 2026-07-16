@@ -6,6 +6,10 @@ filename = 'database'
 filenameFull = filename + '.sqlite3'
 db = data_path + filenameFull
 
+def db_get_path():
+    global db
+    return db
+
 def db_connection():
     global db
     return sqlite3.connect(db)
