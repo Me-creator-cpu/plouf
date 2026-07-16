@@ -645,6 +645,7 @@ def pg_cal_adm():
 
     mode = st.selectbox("Calendar Mode:", options=list(calendar_display.keys()), format_func=lambda x:calendar_display[ x ])
     calendar_options = calendar_options_def
+    st.write(f'mode={mode}')
     if "resource" in mode:
         if mode == "resource-daygrid":
             calendar_options = {
