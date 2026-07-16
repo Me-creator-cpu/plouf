@@ -540,8 +540,8 @@ def pg_resa_delete():
 #==================================================================================================
 def pg_home():
     st.write(db_table_to_df("t_parent",True))
-    db_table_to_df("t_enfant",True)
-    db_table_to_df("t_reservation",True)
+    st.write(db_table_to_df("t_enfant",True))
+    st.write(db_table_to_df("t_reservation",True))
 
 def pg_options_adm():
     db=db_get_path()
