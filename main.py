@@ -539,7 +539,7 @@ def pg_resa_delete():
     st.empty()
 #==================================================================================================
 def pg_home():
-    db_table_to_df("t_parent",True)
+    st.write(db_table_to_df("t_parent",True))
     db_table_to_df("t_enfant",True)
     db_table_to_df("t_reservation",True)
 
