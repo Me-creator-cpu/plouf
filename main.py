@@ -11,6 +11,7 @@ import re
 import hashlib
 
 from pictures import *
+from db_funcs import *
 
 #GitHub 
 from pathlib import Path
@@ -19,10 +20,10 @@ from github import Github
 
 #https://gist.github.com/GeorgePearse/bb951fde95fded5b2a1323fc1c29b8e7
 
-data_path = './data/'
-filename = 'database'
-filenameFull = filename + '.sqlite3'
-db = data_path + filenameFull
+#data_path = './data/'
+#filename = 'database'
+#filenameFull = filename + '.sqlite3'
+#db = data_path + filenameFull
 
 bDebug=False
 #bDebug=True
@@ -88,124 +89,15 @@ column_config_enfant={
 def os_build_path(pathtobuild):
     os.makedirs(pathtobuild, exist_ok=True)
 
-#def db_conn_check(conn):
-#     try:
-#        conn.cursor()
-#        return True
-#     except Exception as ex:
-#        return False
-#    #myconn = sqlite3.connect('test.db')
-#    st.write(chk_conn(myconn))
-
-def db_create(db_fullpath):
-    db = sqlite3.connect(db_fullpath)
-    db.execute('CREATE TABLE IF NOT EXISTS TableName (id INTEGER PRIMARY KEY, quantity INTEGER)')
-    db.close()
-
-def db_create2(db_fullpath):
-    global data_path, filename,filenameFull
-    try:
-        #open('idonotexist')
-        open(db_fullpath)
-        st.write('Database already exists!')
-    except IOError as e:
-        if e.args == 2: # No such file or directory
-            #blank_db = sqlite3.connect('idontexist')
-            blank_db = sqlite3.connect(db_fullpath)
-            st.write(f'{db_fullpath} database created')
-        else: # permission denied or something else?
-            st.write(e)
-
-def db_init_data_test(db_fullpath):
-    connexion = sqlite3.connect(db_fullpath)
-    curseur = connexion.cursor()
-    donnees = [("toto", 1000), ("tata", 750), ("titi", 500)]
-
-    curseur.execute("""CREATE TABLE IF NOT EXISTS scores(
-                    id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-                    pseudo TEXT,
-                    valeur INTEGER
-                    )""")
-    curseur.executemany(
-            "INSERT INTO scores (pseudo, valeur) VALUES (?, ?)",
-            donnees)
-    connexion.commit()
-    connexion.close()
-
-def db_read_test(db_fullpath):
-    connexion = sqlite3.connect(db_fullpath)
-    #connexion = sqlite3.connect(":memory:") # BDD dans la RAM
-    curseur = connexion.cursor() # Récupération d'un curseur
-    curseur.execute("SELECT * FROM scores")
-    for resultat in curseur:
-            st.write(resultat)
-
-    df = pd.read_sql_query("SELECT * FROM scores", connexion)
-    df
-
-    connexion.close()
-
-def db_drop_tests(db_fullpath):
-    connexion = sqlite3.connect(db_fullpath)
-    curseur = connexion.cursor()
-    curseur.executescript("""DROP TABLE IF EXISTS TableName;
-                          DROP TABLE IF EXISTS scores;""")
-    connexion.commit()
-    connexion.close()
-
-def db_drop_table(db_fullpath,tablaname):
-    connexion = sqlite3.connect(db_fullpath)
-    curseur = connexion.cursor()
-    curseur.execute("DROP TABLE IF EXISTS " + tablaname)
-    connexion.commit()
-    connexion.close()
-
 #==================================================================================================
-def db_connection(db_fullpath):
-    global bDebug
-    if bDebug:
-        st.write(db_fullpath)
-    return sqlite3.connect(db_fullpath)
 
-def db_connection_close(conn, bCommit = False):
-    if bCommit:
-        conn.commit()
-    conn.close()        
-
-def db_commit(conn):
-    conn.commit()
-
-def db_exec_sql(sql):
-    global db, bDebug
-    bExecSql=False
-    if bDebug:
-        st.write(f'Exec SQL: {sql}')
-    try:
-        with db_connection(db) as conn:
-            cur = conn.cursor()  
-            cur.execute(sql)
-            conn.commit()
-            bExecSql=True
-    except sqlite3.OperationalError as e:
-        st.write(e)
-        bExecSql=False
-    db_connection_close(conn)
-    return bExecSql
-
-def db_table_to_df(tablename,conn,bShowTab=False):
-    df = pd.read_sql_query("SELECT * FROM " + tablename, conn)
-    if bShowTab:
-        df
-    return df
-
-def db_init_data(db_fullpath,bAddParent=False,bAddEnfant=False,bAddResa=False):
+def db_init_data(bAddParent=False,bAddEnfant=False,bAddResa=False):
     bShowTable = not(bAddParent) and not(bAddEnfant) and not(bAddResa)
 
-    connexion = sqlite3.connect(db_fullpath)
+    connexion = db_connection()
     curseur = connexion.cursor()
 
     if bAddParent:
-                #  (parent_name, parent_tel, parent_mail)
         parents = [("arnaud", "0102030405","test1@mail.com",0), 
                 ("tata", "0607080910","test2@mail.com",0), 
                 ("titi", "0103050700","test3@mail.com",0)]
@@ -222,10 +114,9 @@ def db_init_data(db_fullpath,bAddParent=False,bAddEnfant=False,bAddResa=False):
                 "INSERT INTO t_parent (parent_name, parent_tel, parent_mail,parent_id_del) VALUES (?, ?, ?, ?)",
                 parents)
         connexion.commit()
-        db_table_to_df("t_parent",connexion,True)
+        db_table_to_df("t_parent",True)
         
     if bAddEnfant:
-                #  (enfant_name, parent_id, enfant_niveau, enfant_annee)
         enfants = [("eva", 1, 6, 2016), 
                 ("jean", 1, 12, 2010), 
                 ("paulo", 3, 12, 1994)]
@@ -241,10 +132,9 @@ def db_init_data(db_fullpath,bAddParent=False,bAddEnfant=False,bAddResa=False):
                 "INSERT INTO t_enfant (enfant_name, parent_id, enfant_niveau, enfant_annee) VALUES (?, ?, ?, ?)",
                 enfants)
         connexion.commit()
-        db_table_to_df("t_enfant",connexion,True)
+        db_table_to_df("t_enfant",True)
 
     if bAddResa:
-                       #(enfant_id, resa_date, resa_heure)
         reservations = [(1,"11/07/2026","14:00"),
                         (2,"18/07/2026","15:35"),
                         (3,"17/07/2026","14:35"),
@@ -261,45 +151,25 @@ def db_init_data(db_fullpath,bAddParent=False,bAddEnfant=False,bAddResa=False):
                 "INSERT INTO t_reservation (enfant_id, resa_date, resa_heure) VALUES (?, ?, ?)",
                 reservations)
         connexion.commit()
-        db_table_to_df("t_reservation",connexion,True)
+        db_table_to_df("t_reservation",True)
 
     if bShowTable:
-        db_table_to_df("t_parent",connexion,True)
-        db_table_to_df("t_enfant",connexion,True)
-        db_table_to_df("t_reservation",connexion,True)
+        db_table_to_df("t_parent",True)
+        db_table_to_df("t_enfant",True)
+        db_table_to_df("t_reservation",True)
 
-    connexion.close()
+    db_connection_close(connexion)
 
 
 #==================================================================================================
 
 def init_buttons():
-    global data_path,filename,filenameFull, db
-    #db = data_path + filenameFull
-    if 1 == 2:
-        if st.button('Create path'):
-            st.write('Create...')
-            os_build_path(db)
-
-        if st.button('Create DB'):
-            st.write('Create DB...')
-            db_create2(db)
-
-        if st.button('Create Data'):
-            st.write('Create data...')
-            db_init_data_test(db)
-
-        if st.button('Get DB Data test'):
-            st.write('Read DB...')
-            db_read_test(db)
-
     subtitle('Initialisation données tests')
     bAddParent = st.toggle('Parents',True)
     bAddEnfant = st.toggle('Enfants',False)
     bAddResa = st.toggle('Réservtions',False)
     if st.button("Init data"):
-        db_drop_tests(db)
-        db_init_data(db,bAddParent,bAddEnfant,bAddResa)
+        db_init_data(bAddParent,bAddEnfant,bAddResa)
 
 #==================================================================================================
 # Fonctions données
@@ -390,7 +260,7 @@ def show_diff(
             sql=''
             id=0
 
-            conn = db_connection(db)
+            conn = db_connection()
             for r in range(rows):
                 id=int(source.iloc[r][key_field])
                 for c in target_base:
@@ -433,7 +303,7 @@ def show_diff(
             sql=''
 
             bStatus=False
-            conn = db_connection(db)
+            conn = db_connection()
             for r in range(rows):
                 id=0
                 fld_lst=''
@@ -480,7 +350,7 @@ def show_diff(
             sql=''
             id=0
             bStatus=False
-            conn = db_connection(db)
+            conn = db_connection()
             for r in range(rows):
                 id=int(deleted[0][r])
                 #sql = f"DELETE FROM {table_name} WHERE {key_field} = {id}"
@@ -530,31 +400,20 @@ def email_valid(email):
         ret=False
     return ret
 
-def db_parents_get(ID_Parent = None):
-    global db
-    connexion=db_connection(db)  
+def db_parents_get(ID_Parent = None): 
     if ID_Parent is not None:
         st.write(f'Filtering for {ID_Parent}')
-        df = pd.read_sql_query("SELECT * FROM t_parent WHERE parent_id = " + str(ID_Parent), connexion)
-        db_connection_close(connexion)
+        df = db_sql_to_df("SELECT * FROM t_parent WHERE parent_id = " + str(ID_Parent))
         return pd.DataFrame(df)
-        df2 = pd.DataFrame(df)
-        df2
-        #filtered_df = df[df['Department'] == 'Marketing']
-        filtered_df = df2[df2['parent_id'] == int(ID_Parent)] #.copy(deep=True)
-        filtered_df
-        return filtered_df
-        #return df
     else:
-        df = db_table_to_df("t_parent",connexion,True)
-        db_connection_close(connexion)
+        df = db_table_to_df("t_parent",True)
         return df
 
 def db_parents_update(id,name,tel,email):
     global db
     sql = f'UPDATE t_parent SET parent_name){name} parent_email={email}, parent_tel={tel}  WHERE parent_id={id}'
     try:
-        with db_connection(db) as conn:
+        with db_connection() as conn:
             cur = conn.cursor()  
             cur.execute(sql)
             conn.commit()
@@ -563,10 +422,7 @@ def db_parents_update(id,name,tel,email):
     db_connection_close(conn)
 
 def pg_parent_adm():
-    global db
-    connexion=db_connection(db)  
-    df = db_table_to_df("t_parent",connexion,False)
-    db_connection_close(connexion)
+    df = db_table_to_df("t_parent",False)
     subtitle("Liste des parents ⬇️")
     editor_df = st.data_editor(
         df, 
@@ -580,35 +436,12 @@ def pg_parent_adm():
 
     show_diff(source_df=df, modified_df=editor_df, editor_key=st.session_state["parent_edit"],table_name='t_parent', key_field='parent_id')
     return True
-    df_updated=st.session_state["parent_edit"]
-    st.write(df_updated) 
-
-    st.divider()
-    df_edited  = df_updated.get("edited_rows")
-    st.write(df_edited)
-    if st.button('Mettre à jour'):
-        target = pd.DataFrame(df_edited).transpose().reset_index()
-        modified_columns = [i for i in pd.DataFrame(df_edited).notna().columns if i != "index"]
-        st.write('modified_columns')
-        modified_columns
-        st.write('loop upd')
-        for u in df_edited:
-            st.write(df.loc[u]['parent_id'])
-            #db_parents_update(df.loc[u]['parent_id'],df.loc[u]['parent_name'],df.loc[u]['parent_id'],df.loc[u]['parent_email'])
-    st.divider()
-    df_added   = df_updated.get("added_rows")
-    st.write(df_added)
-    st.divider()
-    df_deleted = df_updated.get("deleted_rows")
-    st.write(df_deleted)
 
 def pg_enfant_adm():
-    global db
-    connexion=db_connection(db)  
-    df = db_table_to_df("t_enfant",connexion,False)
-    df_parent = pd.read_sql_query("SELECT parent_id,parent_name FROM t_parent", connexion)
+    df = db_table_to_df("t_enfant",False)
+    df_parent = db_sql_to_df("SELECT parent_id,parent_name FROM t_parent")
     #lst_parents = connexion.cursor().execute('SELECT parent_id,parent_name FROM t_parent').fetchall()
-    db_connection_close(connexion)  
+
     subtitle("Liste des enfants ⬇️")
 
     df = pd.merge(df, df_parent, how="left", on=["parent_id", "parent_id"])
@@ -676,10 +509,7 @@ def pg_parent_delete():
     st.empty()
 # Enfant ==========================================================================================
 def pg_enfant_get():
-    global db
-    connexion=db_connection(db)
-    db_table_to_df("t_enfant",connexion,True)
-    db_connection_close(connexion)
+    db_table_to_df("t_enfant",True)
 
 def pg_enfant_create():
     st.empty()
@@ -691,12 +521,10 @@ def pg_enfant_delete():
     st.empty()
 # Resa ============================================================================================
 def pg_resa_get():
-    global db
-    connexion=db_connection(db)
-    df_parent=db_table_to_df("t_parent",connexion,True)
-    df_enfant=db_table_to_df("t_enfant",connexion,True)
-    df_resa=db_table_to_df("t_reservation",connexion,True)
-    db_connection_close(connexion)
+    df_parent=db_table_to_df("t_parent",True)
+    df_enfant=db_table_to_df("t_enfant",True)
+    df_resa=db_table_to_df("t_reservation",True)
+
     df = pd.merge(df_resa, df_enfant, how="left", on=["enfant_id", "enfant_id"])
     df = pd.merge(df, df_parent, how="left", on=["parent_id", "parent_id"])
     df
@@ -711,12 +539,9 @@ def pg_resa_delete():
     st.empty()
 #==================================================================================================
 def pg_home():
-    global db
-    connexion=db_connection(db)
-    db_table_to_df("t_parent",connexion,True)
-    db_table_to_df("t_enfant",connexion,True)
-    db_table_to_df("t_reservation",connexion,True)
-    db_connection_close(connexion)
+    db_table_to_df("t_parent",True)
+    db_table_to_df("t_enfant",True)
+    db_table_to_df("t_reservation",True)
 
 def pg_options_adm():
     global db
