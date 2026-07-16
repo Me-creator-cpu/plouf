@@ -194,7 +194,8 @@ def has_data(df):
         return False
     
 def age(year_born=2026):
-    return datetime.datetime.now().year-year_born
+    #return datetime.datetime.now().year-year_born
+    return datetime.now().year-year_born
 
 def show_diff(
     source_df: pd.DataFrame, modified_df: pd.DataFrame, editor_key: dict, table_name: str, key_field: str
