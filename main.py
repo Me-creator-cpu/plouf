@@ -1,11 +1,16 @@
 import streamlit as st
 import pandas as pd
-import datetime
+#import datetime
+from datetime import timedelta
+from datetime import datetime
+from datetime import time
 import locale
 
 import os
 import sqlite3
 import re
+
+from streamlit_calendar import calendar
 
 #Login
 import hashlib
@@ -159,7 +164,6 @@ def db_init_data(bAddParent=False,bAddEnfant=False,bAddResa=False):
         db_table_to_df("t_reservation",True)
 
     db_connection_close(connexion)
-
 
 #==================================================================================================
 
