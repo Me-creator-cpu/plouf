@@ -531,7 +531,7 @@ calendar_display={
         "multimonth":"Multi months",
 }
 
-calendar_options = {
+calendar_options_def = {
     "editable": "true",
     "navLinks": "true",
     "resources": people,
@@ -545,13 +545,21 @@ calendar_options = {
     "initialView": "dayGridMonth",
 }
 
-def build_calendar():
-    global calendar_options, events
-    st.session_state.events = events
-    cal = calendar(
-        events=st.session_state.get("events", events),
-        options=calendar_options,
-        custom_css="""
+calendar_options = { # à supprimer
+    "editable": "true",
+    "navLinks": "true",
+    "resources": people,
+    "selectable": "true",
+    "headerToolbar": {
+        "left": "today prev,next",
+        "center": "title",
+        "right": "dayGridDay,dayGridWeek,dayGridMonth",
+    },
+    "initialDate": "2026-07-16",
+    "initialView": "dayGridMonth",
+}
+
+calendar_css = """
         .fc-event-past {
             opacity: 0.8;
         }
@@ -564,7 +572,15 @@ def build_calendar():
         .fc-toolbar-title {
             font-size: 2rem;
         }
-        """,
+        """
+
+def build_calendar():
+    global calendar_options, events, calendar_css
+    st.session_state.events = events
+    cal = calendar(
+        events=st.session_state.get("events", events),
+        options=calendar_options,
+        custom_css=calendar_css,
         key="Calendar",
     )
     return cal
@@ -622,13 +638,13 @@ def pg_home():
     st.write(db_table_to_df("t_reservation",True))
 
 def pg_cal_adm():
-    global people,calendar_display,calendar_options
-    initialDate='2026-05-12'
+    global people,calendar_display,calendar_options_def,calendar_css
+    initialDate='2026-07-16'
     calendar_groupby = "level" #"title" #"building"    
     st.title("Planning")
 
     mode = st.selectbox("Calendar Mode:", options=list(calendar_display.keys()), format_func=lambda x:calendar_display[ x ])
-
+    calendar_options = calendar_options_def
     if "resource" in mode:
         if mode == "resource-daygrid":
             calendar_options = {
@@ -710,7 +726,13 @@ def pg_cal_adm():
     people['id'] = people['enfant_id']
     people['title'] = people['enfant_name']
 
-    state = build_calendar()
+    #state = build_calendar()
+    state = calendar(
+        events=st.session_state.get("events", events),
+        options=calendar_options,
+        custom_css=calendar_css,
+        key="Calendar",
+    )
 
 def pg_options_adm():
     db=db_get_path()
