@@ -497,6 +497,68 @@ def pg_enfant_adm():
     return True    
 
 #==================================================================================================
+# Calendrier
+#==================================================================================================
+if "events" not in st.session_state:
+    st.session_state.events = None
+
+colors = ["blue", "red", "green"]
+
+events = [
+    {
+        "title": "Event 1",
+        "color": colors[2],
+        "location": "LA",
+        "start": "2026-07-16 14:00",
+        "end": "2026-07-16 16:00",
+        "resourceId": "b",
+    }
+]
+people = [
+    {"id": "a", "title": "Jeff"},
+    {"id": "b", "title": "John"},
+    {"id": "c", "title": "Both"}
+]
+
+calendar_options = {
+    "editable": "true",
+    "navLinks": "true",
+    "resources": people,
+    "selectable": "true",
+    "headerToolbar": {
+        "left": "today prev,next",
+        "center": "title",
+        "right": "dayGridDay,dayGridWeek,dayGridMonth",
+    },
+    "initialDate": "2026-07-16",
+    "initialView": "dayGridMonth",
+}
+
+def build_calendar():
+    global calendar_options, events
+    st.session_state.events = events
+    cal = calendar(
+        events=st.session_state.get("events", events),
+        options=calendar_options,
+        custom_css="""
+        .fc-event-past {
+            opacity: 0.8;
+        }
+        .fc-event-time {
+            font-style: italic;
+        }
+        .fc-event-title {
+            font-weight: 700;
+        }
+        .fc-toolbar-title {
+            font-size: 2rem;
+        }
+        """,
+        key="Calendar",
+    )
+    return cal
+
+#==================================================================================================
 # Pages
 #==================================================================================================
 # Parents =========================================================================================
@@ -547,6 +609,9 @@ def pg_home():
     st.write(db_table_to_df("t_parent",True))
     st.write(db_table_to_df("t_enfant",True))
     st.write(db_table_to_df("t_reservation",True))
+
+def pg_cal_adm():
+    state = build_calendar()
 
 def pg_options_adm():
     db=db_get_path()
@@ -599,7 +664,7 @@ pages = {
         st.Page(pg_parent_adm, title='Gérer parents',icon="🌟"),
         st.Page(pg_enfant_adm, title='Gérer enfants',icon="🧬"),
         st.Page(pg_resa_get, title='Voir réservations',icon="🧬"),
-        st.Page(pg_empty, title='Planning prof',icon="📅"),
+        st.Page(pg_cal_adm, title='Planning prof',icon="📅"),
     ],
     'Options':[    
         st.Page(pg_init_data, title='Init data', icon="🚀"),
