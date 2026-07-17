@@ -757,13 +757,27 @@ def pg_cal_adm():
     calendar_events=df[['title','start','end','resourceId']].copy(deep=True)
     calendar_events
     st.session_state.events=calendar_events
+
+    calendar_options = {
+        "editable": True,
+        "selectable": True,
+        "headerToolbar": {
+            "left": "today prev,next",
+            "center": "title",
+            "right": "resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth",
+        },
+        "slotMinTime": "06:00:00",
+        "slotMaxTime": "18:00:00",
+        "initialView": "resourceTimelineDay",
+        "resourceGroupField": "enfant_name",
+        "resources": calendar_people,
+    }
     #state = build_calendar()
     state = calendar(
         #events=st.session_state.get("events", events),
         events=calendar_events,
         options=calendar_options,
         custom_css=calendar_css,
-        resources=calendar_people,
         key="Calendar",
     )
 
