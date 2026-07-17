@@ -757,7 +757,7 @@ def pg_cal_adm():
     calendar_events=df[['title','start','end','resourceId']].copy(deep=True)
     calendar_events
     st.session_state.events=calendar_events
-
+    calendar_people
     calendar_options = {
         "editable": True,
         "selectable": True,
