@@ -727,6 +727,17 @@ def pg_cal_adm():
     people['id'] = people['enfant_id']
     people['title'] = people['enfant_name']
 
+    df_resa['start']= datetime.strptime(df_resa['resa_date'] + ' ' + df_resa['resa_heure'], 
+                                        '%d/%m/%Y %H:%M:%S')
+    dummy={
+        "title": "Event 1",
+        "color": "colors[2]",
+        "location": "LA",
+        "start": "2026-07-16 14:00",
+        "end": "2026-07-16 16:00",
+        "resourceId": "1",
+    }
+    df_resa
     #state = build_calendar()
     state = calendar(
         events=st.session_state.get("events", events),
