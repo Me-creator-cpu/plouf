@@ -759,7 +759,7 @@ def pg_cal_adm():
     #state = build_calendar()
     state = calendar(
         #events=st.session_state.get("events", events),
-        events=calendar_events
+        events=calendar_events,
         options=calendar_options,
         custom_css=calendar_css,
         key="Calendar",
