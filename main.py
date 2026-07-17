@@ -738,9 +738,9 @@ def pg_cal_adm():
     people = df_enfant.copy(deep=True) 
     people['id'] = people['enfant_id']
     people['title'] = people['enfant_name']
-    df['start'] = df_resa['resa_date'] + ' ' + df_resa['resa_heure'] + ':00'
-    df['start'] = df_resa['start'].map(str2time)
-    df['end'] = df_resa['start'].map(str2timedelta)
+    df['start'] = df['resa_date'] + ' ' + df['resa_heure'] + ':00'
+    df['start'] = df['start'].map(str2time)
+    df['end'] = df['start'].map(str2timedelta)
     
     for x in df_resa:
         st.write(x)
