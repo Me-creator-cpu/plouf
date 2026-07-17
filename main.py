@@ -649,6 +649,13 @@ def str2timedelta(val):
     ret = ret + timedelta(minutes=45)
     return ret
 
+def int2str(val):
+    try:
+        ret=str(val)
+    except:
+        ret=val
+    return ret
+
 def pg_cal_adm():
     global people,calendar_display,calendar_options_def,calendar_css
     initialDate='2026-07-16'
@@ -735,6 +742,7 @@ def pg_cal_adm():
 
     df = pd.merge(df_resa, df_enfant, how="left", on=["enfant_id", "enfant_id"])
     df = pd.merge(df, df_parent, how="left", on=["parent_id", "parent_id"])   
+    
     calendar_people = df_enfant.copy(deep=True) 
     calendar_people=calendar_people.rename(columns={'enfant_id':'id','enfant_name':'title'})
 
@@ -742,7 +750,7 @@ def pg_cal_adm():
     df['start'] = df['start'].map(str2time)
     df['end'] = df['start'].map(str2timedelta)
     df['title'] = df['enfant_name']
-    df['enfant_id'] = str(df['enfant_id'])
+    df['enfant_id'] = df['enfant_id'].map(int2str)
     dummy={
         "title": "Event 1",
         "color": "colors[2]",
