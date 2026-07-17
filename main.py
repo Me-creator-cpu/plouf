@@ -727,9 +727,10 @@ def pg_cal_adm():
     people['id'] = people['enfant_id']
     people['title'] = people['enfant_name']
 
-    df_resa['start'] = datetime.strptime(df_resa['resa_date'] + ' ' + df_resa['resa_heure'] + ':00', 
+    for x in df_resa:
+        x['start'] = datetime.strptime(x['resa_date'] + ' ' + x['resa_heure'] + ':00', 
                                         '%d/%m/%Y %H:%M:%S')
-    df_resa['end'] = df_resa['start'] + datetime.timedelta(minutes=45)
+        x['end'] = x['start'] + datetime.timedelta(minutes=45)
     #datetime.timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0)
     dummy={
         "title": "Event 1",
