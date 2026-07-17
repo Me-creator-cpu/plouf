@@ -738,9 +738,9 @@ def pg_cal_adm():
     people = df_enfant.copy(deep=True) 
     people['id'] = people['enfant_id']
     people['title'] = people['enfant_name']
-    df_resa['start'] = df_resa['resa_date'] + ' ' + df_resa['resa_heure'] + ':00'
-    df_resa['start'] = df_resa['start'].map(str2time)
-    df_resa['end'] = df_resa['start'].map(str2timedelta)
+    df['start'] = df_resa['resa_date'] + ' ' + df_resa['resa_heure'] + ':00'
+    df['start'] = df_resa['start'].map(str2time)
+    df['end'] = df_resa['start'].map(str2timedelta)
     
     for x in df_resa:
         st.write(x)
@@ -756,7 +756,10 @@ def pg_cal_adm():
         "end": "2026-07-16 16:00",
         "resourceId": "1",
     }
-    df_resa
+    df=df.rename(columns={
+        "enfant_id":"resourceId",
+        "enfant_name":"title"
+        })
     #state = build_calendar()
     state = calendar(
         events=st.session_state.get("events", events),
