@@ -778,7 +778,7 @@ def pg_cal_adm():
         "slotMaxTime": "18:00:00",
         "initialView": "resourceTimelineDay",
         "resourceGroupField": "enfant_niveau",
-        "resources": calendar_people,
+        "resources": calendar_people.to_json(),
     }
     #state = build_calendar()
     state = calendar(
