@@ -741,7 +741,7 @@ def pg_cal_adm():
     df['start'] = df['resa_date'] + ' ' + df['resa_heure'] + ':00'
     df['start'] = df['start'].map(str2time)
     df['end'] = df['start'].map(str2timedelta)
-    df['title'] = df['enfant_name'].capitalize()+ ' ' + str(df['resa_id'])
+    df['title'] = str(df['enfant_name']).capitalize()+ ' ' + str(df['resa_id'])
     df['enfant_id'] = str(df['enfant_id'])
     dummy={
         "title": "Event 1",
