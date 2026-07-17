@@ -766,6 +766,16 @@ def pg_cal_adm():
     calendar_events
     st.session_state.events=calendar_events
     calendar_people=calendar_people[['id','title','enfant_niveau']]
+
+    calendar_resources = [
+        {"id": "1", "enfant_niveau": "Building A", "title": "Room A"},
+        {"id": "2", "enfant_niveau": "Building A", "title": "Room B"},
+        {"id": "3", "enfant_niveau": "Building B", "title": "Room C"},
+        {"id": "d", "enfant_niveau": "Building B", "title": "Room D"},
+        {"id": "e", "enfant_niveau": "Building C", "title": "Room E"},
+        {"id": "f", "enfant_niveau": "Building C", "title": "Room F"},
+    ]
+
     calendar_options = {
         "editable": True,
         "selectable": True,
@@ -778,7 +788,7 @@ def pg_cal_adm():
         "slotMaxTime": "18:00:00",
         "initialView": "resourceTimelineDay",
         "resourceGroupField": "enfant_niveau",
-        "resources": calendar_people.to_json(),
+        "resources": calendar_resources,
     }
     #state = build_calendar()
     state = calendar(
