@@ -755,6 +755,7 @@ def pg_cal_adm():
         "enfant_name":"title"
         })
     events=df.copy(deep=True) 
+    events
     #state = build_calendar()
     state = calendar(
         events=st.session_state.get("events", events),
