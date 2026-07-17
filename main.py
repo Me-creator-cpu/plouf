@@ -741,7 +741,7 @@ def pg_cal_adm():
     df['start'] = df['resa_date'] + ' ' + df['resa_heure'] + ':00'
     df['start'] = df['start'].map(str2time)
     df['end'] = df['start'].map(str2timedelta)
-    df['title'] = str(df['enfant_name']).capitalize()
+    df['title'] = df['enfant_name']
     df['enfant_id'] = str(df['enfant_id'])
     dummy={
         "title": "Event 1",
@@ -757,7 +757,7 @@ def pg_cal_adm():
     calendar_events=df[['title','start','end','resourceId']].copy(deep=True)
     calendar_events
     st.session_state.events=calendar_events
-    calendar_people
+    calendar_people=calendar_people[['id','title','enfant_niveau']]
     calendar_options = {
         "editable": True,
         "selectable": True,
@@ -769,7 +769,7 @@ def pg_cal_adm():
         "slotMinTime": "06:00:00",
         "slotMaxTime": "18:00:00",
         "initialView": "resourceTimelineDay",
-        "resourceGroupField": "enfant_name",
+        "resourceGroupField": "enfant_niveau",
         "resources": calendar_people,
     }
     #state = build_calendar()
