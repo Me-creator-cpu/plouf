@@ -736,18 +736,12 @@ def pg_cal_adm():
     df = pd.merge(df_resa, df_enfant, how="left", on=["enfant_id", "enfant_id"])
     df = pd.merge(df, df_parent, how="left", on=["parent_id", "parent_id"])   
     people = df_enfant.copy(deep=True) 
-    people['id'] = people['enfant_id']
-    people['title'] = people['enfant_name']
+    people=people.rename(columns={'enfant_id':'id','enfant_name':'title'})
+
     df['start'] = df['resa_date'] + ' ' + df['resa_heure'] + ':00'
     df['start'] = df['start'].map(str2time)
     df['end'] = df['start'].map(str2timedelta)
-    
-    for x in df_resa:
-        st.write(x)
-        #x['start'] = datetime.strptime(x['resa_date'] + ' ' + x['resa_heure'] + ':00', 
-        #                                '%d/%m/%Y %H:%M:%S')
-        #x['end'] = x['start'] + datetime.timedelta(minutes=45)
-    #datetime.timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0)
+
     dummy={
         "title": "Event 1",
         "color": "colors[2]",
@@ -760,6 +754,7 @@ def pg_cal_adm():
         "enfant_id":"resourceId",
         "enfant_name":"title"
         })
+    events=df.copy(deep=True) 
     #state = build_calendar()
     state = calendar(
         events=st.session_state.get("events", events),
