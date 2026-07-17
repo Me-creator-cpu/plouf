@@ -637,6 +637,12 @@ def pg_home():
     st.write(db_table_to_df("t_enfant",True))
     st.write(db_table_to_df("t_reservation",True))
 
+def str2time(val,mdelta=0):
+    ret = datetime.strptime(val, '%d/%m/%Y %H:%M:%S')
+    if mdelta>0:
+        ret = ret + datetime.timedelta(minutes=45)
+    return ret
+
 def pg_cal_adm():
     global people,calendar_display,calendar_options_def,calendar_css
     initialDate='2026-07-16'
@@ -726,8 +732,9 @@ def pg_cal_adm():
     people = df_enfant.copy(deep=True) 
     people['id'] = people['enfant_id']
     people['title'] = people['enfant_name']
-    df_resa['start']=None
-    df_resa['end']=None
+    df_resa['start'] = df_resa['resa_date'] + ' ' + df_resa['resa_heure'] + ':00'
+    df_resa['end'] = df_resa['start']
+    #str2time
     for x in df_resa:
         st.write(x)
         #x['start'] = datetime.strptime(x['resa_date'] + ' ' + x['resa_heure'] + ':00', 
