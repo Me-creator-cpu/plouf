@@ -642,7 +642,10 @@ def str2time(val):
     return ret
 
 def str2timedelta(val):
-    ret = datetime.strptime(val, '%d/%m/%Y %H:%M:%S')
+    try:
+        ret = datetime.strptime(val, '%d/%m/%Y %H:%M:%S')
+    except:
+        ret = val
     ret = ret + datetime.timedelta(minutes=45)
     return ret
 
