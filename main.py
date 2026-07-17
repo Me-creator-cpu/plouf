@@ -753,12 +753,13 @@ def pg_cal_adm():
     df=df.rename(columns={
         "enfant_id":"resourceId",
         })
-    events=df.copy(deep=True) 
-    events
-    st.session_state.events=events
+    calendar_events=df.copy(deep=True) 
+    calendar_events
+    st.session_state.events=calendar_events
     #state = build_calendar()
     state = calendar(
-        events=st.session_state.get("events", events),
+        #events=st.session_state.get("events", events),
+        events=calendar_events
         options=calendar_options,
         custom_css=calendar_css,
         key="Calendar",
