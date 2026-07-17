@@ -737,7 +737,7 @@ def pg_cal_adm():
     people['title'] = people['enfant_name']
     df_resa['start'] = df_resa['resa_date'] + ' ' + df_resa['resa_heure'] + ':00'
     df_resa['end'] = df_resa['start']
-    df_resa['NewTime'] = df_resa['start'].map(str2time,0)
+    df_resa['NewTime'] = df_resa['start'].map(str2time)
     for x in df_resa:
         st.write(x)
         #x['start'] = datetime.strptime(x['resa_date'] + ' ' + x['resa_heure'] + ':00', 
